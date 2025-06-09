@@ -1,15 +1,14 @@
-using Plugins.ServiceLocator;
 using UISample.Infrastructure;
 
 namespace UISample.UI
 {
     public abstract class BaseController
     {
-        protected readonly SceneUI _sceneUI;
+        protected SceneUI _sceneUI;
 
         protected BaseController()
         {
-            _sceneUI = ServiceLocator.Get<SceneUI>();
+            
         }
         
         public virtual void Show(bool instantly = false)

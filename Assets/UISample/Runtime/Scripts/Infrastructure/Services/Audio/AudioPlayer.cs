@@ -7,28 +7,24 @@ using UnityEngine.Events;
 
 namespace UISample.Infrastructure
 {
-    public class AudioPlayer : IService, IInitializable, IUpdate
+    public class AudioPlayer : IService, IUpdate
     {
         private readonly AudioConfig _config;
+        public AudioConfig Config => _config;
         private readonly MonoPool<AudioSource> _audioPool;
         private readonly List<AudioSource> _activeSources = new();
         private readonly AudioSettings _audioSettings;
         public readonly UnityEvent<AudioSource> OnAudioPlayingCompleted = new();
-        private AudioSource _mainLoopMusic;
+        private AudioSource _backgroundMusic;
         
         public AudioPlayer(ConfigsContainer configsContainer)
         {
             _config = configsContainer.AudioConfig;
-            _audioPool = new MonoPool<AudioSource>(_config.AudioSourcePrefab, 1, new GameObject("Audio Pool").transform);
+            _audioPool = new MonoPool<AudioSource>(_config.AudioSourcePrefab, 1, new GameObject("Audio Pool").transform, true);
             _audioSettings = ServiceLocator.Get<AudioSettings>();
             _audioSettings.OnMusicVolumeChanged.AddListener(OnMusicVolumeChanged);
             var applicationLoop = ServiceLocator.Get<ApplicationLoop>();
             applicationLoop.AddUpdatable(this);
-        }
-
-        public void Initialize()
-        {
-            _mainLoopMusic = PlaySound(_config.MainMusicClip, true, _audioSettings.MusicVolume);
         }
         
         public void CustomUpdate()
@@ -53,9 +49,9 @@ namespace UISample.Infrastructure
             return source;
         }
         
-        public AudioSource PlayMusic(AudioClip clip, bool loop = false)
+        public void PlayMusic(AudioClip clip)
         {
-            return PlaySound(clip, loop, _audioSettings.MusicVolume);
+            _backgroundMusic = PlaySound(clip, true, _audioSettings.MusicVolume);
         }
         
         public AudioSource PlayUI(AudioClip clip)
@@ -73,7 +69,8 @@ namespace UISample.Infrastructure
         
         private void OnMusicVolumeChanged(float value)
         {
-            _mainLoopMusic.volume = value;
+            if(_backgroundMusic)
+                _backgroundMusic.volume = value;
         }
     }
 }

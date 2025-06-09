@@ -10,6 +10,7 @@ namespace UISample.Infrastructure
         public float SoundVolume { get; private set; }
         public float MusicVolume { get; private set; }
         public float UIVolume { get; private set; }
+        public bool Initialized { get; private set; }
         private float _lastSoundVolume;
         private float _lastMusicVolume;
         private float _lastUIVolume;
@@ -27,6 +28,7 @@ namespace UISample.Infrastructure
             SetSoundVolume(_playerData.SoundVolume.Value);
             SetMusicVolume(_playerData.MusicVolume.Value);
             SetUIVolume(_playerData.UIVolume.Value);
+            Initialized = true;
         }
         
         public void SetSoundVolume(float value)

@@ -12,13 +12,17 @@ namespace UISample.Infrastructure
         protected readonly Dictionary<Type, BaseController> _controllers = new();
         protected readonly Dictionary<Type, BaseController> _showedControllers = new();
         protected readonly Stack<List<Type>> _previousControllersStack = new();
+        public bool Initialized { get; private set; }
 
         protected SceneUI(UIContainer uiContainer)
         {
             _uiContainer = uiContainer;
         }
-        
-        public virtual void Initialize() { }
+
+        public virtual void Initialize()
+        {
+            Initialized = true;
+        }
         
         public T GetController<T>() where T : BaseController
         {

@@ -433,7 +433,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiContainer: {fileID: 598326879}
-  _configsContainer: {fileID: 1852212204}
 --- !u!114 &1852212204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +537,14 @@ PrefabInstance:
     - target: {fileID: 4239422251178457416, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5042692872878087441, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
+      propertyPath: m_text
+      value: 99999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8455694967360842904, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
+      propertyPath: m_text
+      value: 99999
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

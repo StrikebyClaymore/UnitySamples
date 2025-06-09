@@ -13,6 +13,7 @@ namespace UISample.UI
             _view = uiContainer.GetView<SettingsView>();
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _audioSettings = ServiceLocator.Get<AudioSettings>();
+            _sceneUI = ServiceLocator.Get<MainSceneUI>();
             
             _audioSettings.OnSoundVolumeChanged.AddListener(SoundVolumeChanged);
             _audioSettings.OnMusicVolumeChanged.AddListener(MusicVolumeChanged);
@@ -21,6 +22,10 @@ namespace UISample.UI
             _view.SoundSlider.onValueChanged.AddListener(SoundSliderChanged);
             _view.MusicSlider.onValueChanged.AddListener(MusicSliderChanged);
             _view.UISlider.onValueChanged.AddListener(UISliderChanged);
+
+            SoundVolumeChanged(_audioSettings.SoundVolume);
+            MusicVolumeChanged(_audioSettings.MusicVolume);
+            UIVolumeChanged(_audioSettings.UIVolume);
         }
 
         public override void Show(bool instantly = false)

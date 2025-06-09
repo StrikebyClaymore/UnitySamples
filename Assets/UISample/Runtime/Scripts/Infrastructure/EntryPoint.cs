@@ -1,15 +1,31 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using Plugins.ServiceLocator;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UISample.Infrastructure
 {
-    public class EntryPoint : MonoBehaviour
+    public class EntryPoint
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         public static void Initialize()
         {
-            var installer = FindObjectOfType<MainSceneInstaller>();
-            installer.Install();
-            installer.Initialize();
+            var coroutineHelper = new GameObject(nameof(CoroutineHelper)).AddComponent<CoroutineHelper>();
+            ServiceLocator.Register<CoroutineHelper>(coroutineHelper);
+            coroutineHelper.StartCoroutine(InitializeAsync());
+        }
+
+        private static IEnumerator InitializeAsync()
+        {
+            if (SceneManager.GetActiveScene().buildIndex != 0)
+            {
+                var asyncOperation = SceneManager.LoadSceneAsync(0);
+                while (!asyncOperation.isDone)
+                    yield return null;
+            }
+            var appInstaller = GameObject.FindObjectOfType<ApplicationInstaller>();
+            appInstaller.Install();
+            appInstaller.Initialize();
         }
     }
 }

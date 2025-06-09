@@ -9,8 +9,10 @@ namespace Pool
         private readonly Transform _parent;
         private readonly List<T> _objects = new();
 
-        public MonoPool(T prefab, int initialSize = 0, Transform parent = null)
+        public MonoPool(T prefab, int initialSize = 0, Transform parent = null, bool dontDestroyOnLoad = false)
         {
+            if (parent && dontDestroyOnLoad)
+                parent.SetParent(PoolsRoot.Instance.transform);
             _prefab = prefab;
             _parent = parent;
             for (int i = 0; i < initialSize; i++)

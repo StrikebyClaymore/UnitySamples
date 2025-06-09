@@ -1,4 +1,5 @@
-﻿using UISample.Infrastructure;
+﻿using Plugins.ServiceLocator;
+using UISample.Infrastructure;
 
 namespace UISample.UI
 {
@@ -6,11 +7,11 @@ namespace UISample.UI
     {
         private readonly MainMenuView _view;
         
-        
         public MainMenuController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<MainMenuView>();
             _view.SettingsButton.onClick.AddListener(SettingsPressed);
+            _sceneUI = ServiceLocator.Get<MainSceneUI>();
         }
 
         public override void Show(bool instantly = false)
