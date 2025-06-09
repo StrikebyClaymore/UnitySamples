@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac5cd8208dbd4fc8b4b96d9d8c673790, type: 3}
+  m_Name: AudioConfig
+  m_EditorClassIdentifier: 
+  <AudioSourcePrefab>k__BackingField: {fileID: 4302073890254566520, guid: 6af139f3981d664418375294cdddf297, type: 3}
+  <DefaultSoundVolume>k__BackingField: 0.5
+  <DefaultMusicVolume>k__BackingField: 0.5
+  <DefaultUIVolume>k__BackingField: 0.5
+  <MainMusicClip>k__BackingField: {fileID: 8300000, guid: f7c56ae2a0bfad0499f226c72eb608a8, type: 3}
+  <TestClip>k__BackingField: {fileID: 8300000, guid: f10e7ff812627164fa39911459400577, type: 3}

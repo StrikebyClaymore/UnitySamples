@@ -1,0 +1,21 @@
+{
+    "name": "UISample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:776d03a35f1b52c4a9aed9f56d7b4229",
+        "GUID:e03aa2b6fd453d14986247f8df81d346",
+        "GUID:375a2b2d1d3bd46ba98f8cd67b6afde6",
+        "GUID:eef6182f69ed40a4e8da291d21e9bf2b",
+        "GUID:28bee613039175549973697943fe12ff",
+        "GUID:da9540fec8f7ae943a5ba3c751b1b5ef"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
