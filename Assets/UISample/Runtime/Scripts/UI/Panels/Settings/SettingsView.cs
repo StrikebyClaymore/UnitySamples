@@ -21,5 +21,7 @@ namespace UISample.UI
         [field: SerializeField] public Sprite SoundOff { get; private set; }
         [field: SerializeField] public Sprite MusicOn { get; private set; }
         [field: SerializeField] public Sprite MusicOff { get; private set; }
+        [field: SerializeField] public Sprite UIOn { get; private set; }
+        [field: SerializeField] public Sprite UIOff { get; private set; }
     }
 }

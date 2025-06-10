@@ -293,6 +293,8 @@ namespace Crystal
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
+            if(!Application.isPlaying)
+                return;
             var safe = Screen.safeArea;
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(new Vector3(safe.x + safe.width / 2f, safe.y + safe.height / 2f, 0), new Vector3(safe.width, safe.height, 1));

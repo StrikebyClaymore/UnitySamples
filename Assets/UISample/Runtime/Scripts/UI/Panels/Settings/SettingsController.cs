@@ -74,7 +74,7 @@ namespace UISample.UI
         {
             _view.AudioSource.volume = value;
             _view.UISlider.SetValueWithoutNotify(value);
-            _view.UIIcon.sprite = value > 0 ? _view.SoundOn : _view.SoundOff;
+            _view.UIIcon.sprite = value > 0 ? _view.UIOn : _view.UIOff;
         }
     }
 }
