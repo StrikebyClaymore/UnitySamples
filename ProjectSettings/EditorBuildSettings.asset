@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/UISample/Runtime/Scenes/UISampleMain.unity
     guid: 30ef0bf5f76a9ec4e8a7790beb23c76b
+  - enabled: 1
+    path: Assets/UISample/Runtime/Scenes/UISampleGameplay.unity
+    guid: 1ebd90d9f230c61418fdf3ffff76e6ef
   m_configObjects: {}

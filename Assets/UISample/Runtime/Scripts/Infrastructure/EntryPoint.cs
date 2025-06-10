@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Plugins.ServiceLocator;
+using UISample.Data;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -17,9 +18,9 @@ namespace UISample.Infrastructure
 
         private static IEnumerator InitializeAsync()
         {
-            if (SceneManager.GetActiveScene().buildIndex != 0)
+            if (SceneManager.GetActiveScene().buildIndex != GameConstants.LoadingSceneIndex)
             {
-                var asyncOperation = SceneManager.LoadSceneAsync(0);
+                var asyncOperation = SceneManager.LoadSceneAsync(GameConstants.LoadingSceneIndex);
                 while (!asyncOperation.isDone)
                     yield return null;
             }

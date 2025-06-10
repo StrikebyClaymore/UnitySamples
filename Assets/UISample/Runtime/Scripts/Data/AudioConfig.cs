@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UISample.Datas
+namespace UISample.Data
 {
     [CreateAssetMenu(fileName = "AudioConfig", menuName = "UISample/Audio Config")]
     public class AudioConfig : ScriptableObject

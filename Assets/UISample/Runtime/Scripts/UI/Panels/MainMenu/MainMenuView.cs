@@ -5,6 +5,7 @@ namespace UISample.UI
 {
     public class MainMenuView : BaseView
     {
+        [field: SerializeField] public Button PlayButton { get; private set; }
         [field: SerializeField] public Button SettingsButton { get; private set; }
     }
 }

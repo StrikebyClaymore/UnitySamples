@@ -1,4 +1,4 @@
-﻿using UISample.Datas;
+﻿using UISample.Data;
 using UnityEngine;
 
 namespace UISample.Infrastructure

@@ -19,14 +19,14 @@ namespace UISample.Infrastructure
             _coroutineHelper = ServiceLocator.Get<CoroutineHelper>();
         }
 
-        public Coroutine LoadSceneAsync(string sceneName, List<IEnumerator> tasks = null)
+        public Coroutine LoadSceneAsync(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive, List<IEnumerator> tasks = null)
         {
-            return _coroutineHelper.StartCoroutine(LoadSceneRoutine(CreateLoadAsyncOperation(sceneName), tasks));
+            return _coroutineHelper.StartCoroutine(LoadSceneRoutine(CreateLoadAsyncOperation(sceneName, mode), tasks));
         }
 
-        public Coroutine LoadSceneAsync(int buildIndex, List<IEnumerator> tasks = null)
+        public Coroutine LoadSceneAsync(int buildIndex, LoadSceneMode mode = LoadSceneMode.Additive, List<IEnumerator> tasks = null)
         {
-            return _coroutineHelper.StartCoroutine(LoadSceneRoutine(CreateLoadAsyncOperation(buildIndex), tasks));
+            return _coroutineHelper.StartCoroutine(LoadSceneRoutine(CreateLoadAsyncOperation(buildIndex, mode), tasks));
         }
 
         private IEnumerator LoadSceneRoutine(AsyncOperation asyncOperation, List<IEnumerator> tasks)
@@ -61,11 +61,11 @@ namespace UISample.Infrastructure
             OnLoadingEnd?.Invoke();
         }
 
-        private AsyncOperation CreateLoadAsyncOperation(string sceneName) =>
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        private AsyncOperation CreateLoadAsyncOperation(string sceneName, LoadSceneMode mode = LoadSceneMode.Additive) =>
+            SceneManager.LoadSceneAsync(sceneName, mode);
 
-        private AsyncOperation CreateLoadAsyncOperation(int buildIndex) =>
-            SceneManager.LoadSceneAsync(buildIndex, LoadSceneMode.Additive);
+        private AsyncOperation CreateLoadAsyncOperation(int buildIndex, LoadSceneMode mode = LoadSceneMode.Additive) =>
+            SceneManager.LoadSceneAsync(buildIndex, mode);
 
         public Coroutine UnloadSceneAsync(int buildIndex)
         {

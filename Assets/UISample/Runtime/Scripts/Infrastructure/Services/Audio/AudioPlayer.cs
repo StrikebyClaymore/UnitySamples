@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Plugins.ServiceLocator;
 using Pool;
-using UISample.Datas;
+using UISample.Data;
 using UnityEngine;
 using UnityEngine.Events;
 

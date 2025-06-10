@@ -1,5 +1,7 @@
 ﻿using Plugins.ServiceLocator;
+using UISample.Data;
 using UISample.Infrastructure;
+using UnityEngine.SceneManagement;
 
 namespace UISample.UI
 {
@@ -10,6 +12,7 @@ namespace UISample.UI
         public MainMenuController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<MainMenuView>();
+            _view.PlayButton.onClick.AddListener(PlayPressed);
             _view.SettingsButton.onClick.AddListener(SettingsPressed);
             _sceneUI = ServiceLocator.Get<MainSceneUI>();
         }
@@ -22,6 +25,12 @@ namespace UISample.UI
         public override void Hide(bool instantly = false)
         {
             _view.Hide(instantly);
+        }
+
+        private void PlayPressed()
+        {
+            var sceneLoader = ServiceLocator.Get<SceneLoader>();
+            sceneLoader.LoadSceneAsync(GameConstants.GameplaySceneIndex, LoadSceneMode.Single);
         }
         
         private void SettingsPressed()

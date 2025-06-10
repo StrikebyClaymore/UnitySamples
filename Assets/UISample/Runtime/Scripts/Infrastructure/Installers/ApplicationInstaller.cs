@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Plugins.ServiceLocator;
+using UISample.Data;
 using UnityEngine;
 
 namespace UISample.Infrastructure
@@ -32,11 +33,11 @@ namespace UISample.Infrastructure
         private IEnumerator LoadMainScene()
         {
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
-            yield return sceneLoader.LoadSceneAsync(1);
+            yield return sceneLoader.LoadSceneAsync(GameConstants.MainMenuSceneIndex);
             var mainSceneInstaller = GameObject.FindObjectOfType<MainSceneInstaller>();
             mainSceneInstaller.Install();
             mainSceneInstaller.Initialize();
-            sceneLoader.UnloadSceneAsync(0);
+            sceneLoader.UnloadSceneAsync(GameConstants.LoadingSceneIndex);
         }
 
         private void InstallSceneLoading()
