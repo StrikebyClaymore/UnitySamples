@@ -1,19 +1,13 @@
 ﻿using System;
 using NaughtyAttributes;
 using UISample.Infrastructure;
+using UISample.Utility;
 using UnityEngine;
 
 namespace UISample.Features
 {
     public class CameraFollow : MonoBehaviour, IUpdatable
     {
-        private enum EUpdateMode
-        {
-            Update,
-            FixedUpdate,
-            LateUpdate,
-        }
-
         [Serializable]
         private struct FollowBounds
         {
@@ -64,12 +58,18 @@ namespace UISample.Features
             float cameraHeight = 2f * _camera.orthographicSize;
             float cameraWidth = cameraHeight * _camera.aspect;
             Vector3 cameraHalfSize = new Vector3(cameraWidth * 0.5f, cameraHeight * 0.5f, 0f);
-            float minX = _bounds.MinX + cameraHalfSize.x;
-            float maxX = _bounds.MaxX - cameraHalfSize.x;
-            targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
-            float minY = _bounds.MinY + cameraHalfSize.y;
-            float maxY = _bounds.MaxY - cameraHalfSize.y;
-            targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
+            if (_bounds.MinX != _bounds.MaxX)
+            {
+                float minX = _bounds.MinX + cameraHalfSize.x;
+                float maxX = _bounds.MaxX - cameraHalfSize.x;
+                targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);
+            }
+            if (_bounds.MinY != _bounds.MaxY)
+            {
+                float minY = _bounds.MinY + cameraHalfSize.y;
+                float maxY = _bounds.MaxY - cameraHalfSize.y;
+                targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);
+            }
             targetPosition.z = _target.position.z + _offset.z;
             return targetPosition;
         }

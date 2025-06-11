@@ -18,15 +18,18 @@ namespace UISample.Infrastructure
 
         private static IEnumerator InitializeAsync()
         {
-            if (SceneManager.GetActiveScene().buildIndex != GameConstants.LoadingSceneIndex)
+            if (SceneManager.GetActiveScene().buildIndex == GameConstants.MainMenuSceneIndex || SceneManager.GetActiveScene().buildIndex == GameConstants.GameplaySceneIndex)
             {
                 var asyncOperation = SceneManager.LoadSceneAsync(GameConstants.LoadingSceneIndex);
                 while (!asyncOperation.isDone)
                     yield return null;
             }
-            var appInstaller = GameObject.FindObjectOfType<ApplicationInstaller>();
-            appInstaller.Install();
-            appInstaller.Initialize();
+            if (SceneManager.GetActiveScene().buildIndex == GameConstants.LoadingSceneIndex)
+            {
+                var appInstaller = GameObject.FindObjectOfType<ApplicationInstaller>();
+                appInstaller.Install();
+                appInstaller.Initialize();
+            }
         }
     }
 }
