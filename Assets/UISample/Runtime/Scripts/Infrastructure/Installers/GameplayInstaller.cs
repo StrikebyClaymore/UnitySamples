@@ -10,6 +10,7 @@ namespace UISample.Infrastructure
         [SerializeField] private CameraFollow _cameraFollow;
         [SerializeField] private Parallax _parallax;
         [SerializeField] private PlayerInstaller _playerInstaller;
+        [SerializeField] private MapGeneratorMono _mapGenerator;
         public bool Initialized { get; private set; }
 
         private void Start()
@@ -27,6 +28,7 @@ namespace UISample.Infrastructure
         
         public void Initialize()
         {
+            _mapGenerator.Initialize();
             ServiceLocator.Get<GameplaySceneUI>().Initialize();
             _playerInstaller.Install();
             Initialized = true;

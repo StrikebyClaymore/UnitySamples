@@ -7,15 +7,21 @@ namespace UISample.UI
     public class ControlsController : BaseController
     {
         private readonly ControlsView _view;
-        public readonly UnityEvent<Vector2> OnControlPressed = new();
+        public readonly UnityEvent<Vector3Int> OnControlPressed = new();
+        public readonly UnityEvent<Vector3Int> OnControlReleased = new();
         
         public ControlsController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<ControlsView>();
-            _view.TopButton.onClick.AddListener(() => ControlPressed(Vector2.up));
-            _view.RightButton.onClick.AddListener(() => ControlPressed(Vector2.right));
-            _view.DownButton.onClick.AddListener(() => ControlPressed(Vector2.down));
-            _view.LeftButton.onClick.AddListener(() => ControlPressed(Vector2.left));
+            _view.TopButton.OnButtonPress.AddListener(() => ControlPressed(Vector3Int.up));
+            _view.RightButton.OnButtonPress.AddListener(() => ControlPressed(Vector3Int.right));
+            _view.DownButton.OnButtonPress.AddListener(() => ControlPressed(Vector3Int.down));
+            _view.LeftButton.OnButtonPress.AddListener(() => ControlPressed(Vector3Int.left));   
+            
+            _view.TopButton.OnButtonRelease.AddListener(() => ControlReleased(Vector3Int.up));
+            _view.RightButton.OnButtonRelease.AddListener(() => ControlReleased(Vector3Int.right));
+            _view.DownButton.OnButtonRelease.AddListener(() => ControlReleased(Vector3Int.down));
+            _view.LeftButton.OnButtonRelease.AddListener(() => ControlReleased(Vector3Int.left));
         }
 
         public override void Show(bool instantly = false)
@@ -28,9 +34,14 @@ namespace UISample.UI
             _view.Hide(instantly);
         }
         
-        private void ControlPressed(Vector2 direction)
+        private void ControlPressed(Vector3Int direction)
         {
             OnControlPressed?.Invoke(direction);
+        }
+        
+        private void ControlReleased(Vector3Int direction)
+        {
+            OnControlReleased?.Invoke(direction);
         }
     }
 }

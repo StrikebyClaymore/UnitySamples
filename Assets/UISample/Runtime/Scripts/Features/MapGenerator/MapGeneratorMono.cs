@@ -1,81 +1,155 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NaughtyAttributes;
+using UISample.Infrastructure;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace UISample.Features
 {
     [ExecuteAlways]
-    public class MapGeneratorMono : MonoBehaviour
+    public class MapGeneratorMono : MonoBehaviour, IInitializable
     {
-        [SerializeField] private Transform _target;
-        [SerializeField] private int _chunkWitdh = 22;
-        [SerializeField] private Tilemap _tilemap;
-        [SerializeField] private TileBase _ground, _trunk, _stick, _leaves;
-        [SerializeField] private RuleTile _crown;
-        [SerializeField] private Vector2Int _branchesRange = new Vector2Int(2, 3);
+        public enum ENodeType
+        {
+            Trunk,
+            Branch,
+            Leaves,
+            Crown,
+        }
         
+        public class Node
+        {
+            public readonly ENodeType Type;
+            public readonly Vector3Int Position;
+            public readonly List<Node> Connections = new();
+
+            public Node(ENodeType type, Vector3Int position)
+            {
+                Type = type;
+                Position = position;
+            }
+        }
+
+        public class Tree
+        {
+            public readonly int PositionX;
+            public readonly List<Node> Nodes = new();
+
+            public Tree(int positionX)
+            {
+                PositionX = positionX;
+            }
+        }
+        
+        [SerializeField] private Transform _target;
+        [SerializeField] private int _chunkWitdh = 19;
+        [SerializeField] private Tilemap _tilemap;
+        [SerializeField] private TileBase _ground, _trunk, _branch, _leaves;
+        [SerializeField] private RuleTile _crown;
+        [SerializeField] private Vector2Int _branchesRange = new(2, 3);
         [SerializeField] private int _moveDirection = 1;
-        [SerializeField] private int _targetX;
         [SerializeField] private int _currentTreeX;
         [SerializeField] private int _treeSize = 5;
-        
-        [SerializeField] private List<int> _generatedTreePositions = new List<int>();
+        private readonly List<Tree> _trees = new();
+        public IReadOnlyList<Tree> Trees => _trees;
+        public Transform Target
+        {
+            set => _target = value;
+        }
+        public Node PlayerSpawnNode { get; private set; }
+        public bool Initialized { get; private set; }
         
         private void Awake()
         {
             _currentTreeX = 0;
         }
 
+        public void Initialize()
+        {
+            Generate();
+            Initialized = true;
+        }
+
         private void Update()
         {
-            if(_target is null)
+            if (_target == null)
                 return;
+
             var targetPosX = _tilemap.WorldToCell(_target.position).x;
-            _targetX = targetPosX;
-            if (targetPosX > _currentTreeX + _treeSize / 2)
+
+            if (_moveDirection == 1)
             {
-                _currentTreeX += _treeSize + 1;
-                RemoveTree(_generatedTreePositions[0]);
-                _generatedTreePositions.RemoveAt(0);
-                GenerateTree(_currentTreeX + _treeSize + 1);
+                if (targetPosX > _currentTreeX + _treeSize / 2)
+                {
+                    _currentTreeX += _treeSize + 1;
+                    RemoveTree(_trees[0]);
+                    _trees.RemoveAt(0);
+                    GenerateTree(_currentTreeX + _treeSize + 1);
+                }
+            }
+            else if (_moveDirection == -1)
+            {
+                if (targetPosX < _currentTreeX - _treeSize / 2)
+                {
+                    _currentTreeX -= _treeSize + 1;
+                    RemoveTree(_trees[0]);
+                    _trees.RemoveAt(0);
+                    GenerateTree(_currentTreeX - _treeSize - 1);
+                }
             }
         }
 
-        private void RemoveTree(int startX)
+        private void RemoveTree(Tree tree)
         {
             for (int y = 0; y < 20; y++)
             {
                 for (int x = -2; x < 3; x++)
                 {
-                    _tilemap.SetTile(new Vector3Int(startX + x, y, 0), null);
+                    _tilemap.SetTile(new Vector3Int(tree.PositionX + x, y, 0), null);
                 }
             }
         }
 
+        [Button("Reset")]
+        private void ResetGame()
+        {
+            _tilemap.ClearAllTiles();
+            _trees.Clear();
+            _currentTreeX = 0;
+        }
+        
         [Button("Generate")]
         private void Generate()
         {
             _tilemap.ClearAllTiles();
+            _trees.Clear();
             GenerateTree(-6);
-            GenerateTree(0);
+            CreateStartTree();
             GenerateTree(6);
+            if(_moveDirection == -1)
+                _trees.Reverse();
         }
         
         private void GenerateTree(int x)
         {
-            _generatedTreePositions.Add(x);
+            var tree = new Tree(x);
+            _trees.Add(tree);
             
             int y = 0;
             System.Random rnd = new System.Random();
             int branchSections = rnd.Next(_branchesRange.x, _branchesRange.y + 1);
             int? previousDirection = null;
-
+            Vector3Int position;
+            
             for (int i = 0; i < branchSections; i++)
             {
                 for (int j = 0; j < 3; j++)
-                    _tilemap.SetTile(new Vector3Int(x, y++, 0), _trunk);
+                {
+                    position = new Vector3Int(x, y++, 0);
+                    _tilemap.SetTile(position, _trunk);
+                    var node = new Node(ENodeType.Trunk, position);
+                    tree.Nodes.Add(node);
+                }
 
                 int direction;
                 if (previousDirection == null)
@@ -84,17 +158,28 @@ namespace UISample.Features
                     direction = -previousDirection.Value;
                 previousDirection = direction;
 
-                _tilemap.SetTile(new Vector3Int(x + direction, y - 1, 0), _stick);
-                _tilemap.SetTile(new Vector3Int(x + direction * 2, y - 1, 0), _leaves);
+                position = new Vector3Int(x + direction, y - 1, 0);
+                _tilemap.SetTile(position, _branch);
+                tree.Nodes.Add(new Node(ENodeType.Branch, position));
+                
+                position = new Vector3Int(x + direction * 2, y - 1, 0);
+                _tilemap.SetTile(position, _leaves);
+                tree.Nodes.Add(new Node(ENodeType.Leaves, position));
             }
 
-            _tilemap.SetTile(new Vector3Int(x, y++, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(x, y++, 0), _trunk);
-            GenerateCrown(x, y, 2);
+            position = new Vector3Int(x, y++, 0);
+            _tilemap.SetTile(position, _trunk);
+            tree.Nodes.Add(new Node(ENodeType.Trunk, position));
+            
+            position = new Vector3Int(x, y++, 0);
+            _tilemap.SetTile(position, _trunk);
+            tree.Nodes.Add(new Node(ENodeType.Trunk, position));
+            
+            GenerateCrown(x, y, 2, tree);
+            ConnectNodes(tree);
         }
 
-
-        private void GenerateCrown(int centerX, int startY, int branchCount)
+        private void GenerateCrown(int centerX, int startY, int branchCount, Tree tree)
         {
             int width = branchCount == 2 ? 5 : 7;
             int height = branchCount == 2 ? 3 : 4;
@@ -103,46 +188,93 @@ namespace UISample.Features
             {
                 for (int x = -halfWidth; x <= halfWidth; x++)
                 {
-                    _tilemap.SetTile(new Vector3Int(centerX + x, startY + y, 0), _crown);
+                    var position = new Vector3Int(centerX + x, startY + y, 0);
+                    _tilemap.SetTile(position, _crown);
+                    tree.Nodes.Add(new Node(ENodeType.Crown, position));
+                }
+            }
+        }
+        
+        private void ConnectNodes(Tree tree)
+        {
+            for (int i = 0; i < tree.Nodes.Count; i++)
+            {
+                var currentNode = tree.Nodes[i];
+                for (int j = 0; j < tree.Nodes.Count; j++)
+                {
+                    var targetNode = tree.Nodes[j];
+                    if (CanConnectNodes(currentNode, targetNode))
+                    {
+                        currentNode.Connections.Add(targetNode);
+                    }
                 }
             }
         }
 
+        private bool CanConnectNodes(Node current, Node target)
+        {
+            if (current.Type is ENodeType.Crown || target.Type is ENodeType.Crown)
+                return false;
+            if (Mathf.Abs(current.Position.x - target.Position.x) + Mathf.Abs(current.Position.y - target.Position.y) == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
         private void CreateStartTree()
         {
-            _tilemap.SetTile(new Vector3Int(0, 0, 0), _ground);
+            var tree = new Tree(0);
+            _trees.Add(tree);
+
+            Node AddNode(ENodeType type, Vector3Int position, TileBase tile)
+            {
+                _tilemap.SetTile(position, tile);
+                var node = new Node(type, position);
+                tree.Nodes.Add(node);
+                return node;
+            }
+
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 0, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 1, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 2, 0), _trunk);
+            AddNode(ENodeType.Branch, new Vector3Int(-1, 2, 0), _branch);
+            AddNode(ENodeType.Leaves, new Vector3Int(-2, 2, 0), _leaves);
+
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 3, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 4, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 5, 0), _trunk);
+            AddNode(ENodeType.Branch, new Vector3Int(1, 5, 0), _branch);
+            var node = AddNode(ENodeType.Leaves, new Vector3Int(2, 5, 0), _leaves);
+            PlayerSpawnNode = node;
+
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 6, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(0, 7, 0), _trunk);
+
+            AddNode(ENodeType.Crown, new Vector3Int(0, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(1, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(2, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-1, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-2, 8, 0), _crown);
+
+            AddNode(ENodeType.Crown, new Vector3Int(0, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(1, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(2, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-1, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-2, 9, 0), _crown);
+
+            AddNode(ENodeType.Crown, new Vector3Int(0, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(1, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(2, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-1, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(-2, 10, 0), _crown);
             
-            _tilemap.SetTile(new Vector3Int(0, 1, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(0, 2, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(0, 3, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(-1, 3, 0), _stick);
-            _tilemap.SetTile(new Vector3Int(-2, 3, 0), _leaves);
-            
-            _tilemap.SetTile(new Vector3Int(0, 4, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(0, 5, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(0, 6, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(1, 6, 0), _stick);
-            _tilemap.SetTile(new Vector3Int(2, 6, 0), _leaves);
-            _tilemap.SetTile(new Vector3Int(0, 7, 0), _trunk);
-            _tilemap.SetTile(new Vector3Int(0, 8, 0), _trunk);
-            
-            _tilemap.SetTile(new Vector3Int(0, 9, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(1, 9, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(2, 9, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-1, 9, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-2, 9, 0), _crown);
-            
-            _tilemap.SetTile(new Vector3Int(0, 10, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(1, 10, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(2, 10, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-1, 10, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-2, 10, 0), _crown);
-            
-            _tilemap.SetTile(new Vector3Int(0, 11, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(1, 11, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(2, 11, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-1, 11, 0), _crown);
-            _tilemap.SetTile(new Vector3Int(-2, 11, 0), _crown);
+            ConnectNodes(tree);
+        }
+
+        public Vector3 MapToWorld(Vector3Int position)
+        {
+            return _tilemap.CellToWorld(position) + _tilemap.cellSize / 2;
         }
     }
 }

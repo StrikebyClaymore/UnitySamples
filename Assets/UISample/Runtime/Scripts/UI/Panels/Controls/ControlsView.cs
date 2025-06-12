@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UISample.UI.UIElements;
+using UnityEngine;
 
 namespace UISample.UI
 {

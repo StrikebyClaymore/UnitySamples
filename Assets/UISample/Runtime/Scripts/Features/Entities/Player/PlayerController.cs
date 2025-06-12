@@ -7,10 +7,10 @@ namespace UISample.Features
         private readonly PlayerView _view;
         private readonly PlayerMovement _movement;
         
-        public PlayerController(PlayerView view)
+        public PlayerController(PlayerView view, MapGeneratorMono mapGenerator)
         {
             _view = view;
-            _movement = new PlayerMovement(_view);
+            _movement = new PlayerMovement(_view, mapGenerator);
         }
 
         public void CustomUpdate()
