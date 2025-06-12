@@ -75,9 +75,8 @@ namespace UISample.Features
             {
                 if (node.Position == _currentNode.Position + _direction)
                 {
-                    Debug.Log($"Move to {node.Type} {node.Position}");
                     _currentNode = node;
-                    break;
+                    return;
                 }
             }
         }
@@ -96,9 +95,10 @@ namespace UISample.Features
                             Mathf.Abs(_currentNode.Position.x - node.Position.x) +
                             Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
                         {
-                            Debug.Log($"Move to next tree {node.Type} {node.Position}");
                             _currentTree = tree;
                             _currentNode = node;
+                            _mapGenerator.SetDirection(_direction.x);
+                            return;
                         }
                     }
                 }
@@ -111,7 +111,6 @@ namespace UISample.Features
             {
                 if (node.Position == _currentNode.Position + _direction)
                 {
-                    Debug.Log($"Can move to {node.Type} {node.Position}");
                     return true;
                 }
             }
@@ -120,6 +119,8 @@ namespace UISample.Features
 
         private bool CanMoveBetweenTree()
         {
+            if (_mapGenerator.MoveDirection != 0 && _direction.x != _mapGenerator.MoveDirection)
+                return false;
             if (_currentNode.Type is MapGeneratorMono.ENodeType.Leaves)
             {
                 foreach (var tree in _mapGenerator.Trees)
@@ -132,7 +133,6 @@ namespace UISample.Features
                             Mathf.Abs(_currentNode.Position.x - node.Position.x) +
                             Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
                         {
-                            Debug.Log($"Can move to next tree {node.Type} {node.Position}");
                             return true;
                         }
                     }

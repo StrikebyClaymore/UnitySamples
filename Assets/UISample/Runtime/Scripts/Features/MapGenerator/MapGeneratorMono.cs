@@ -2,6 +2,7 @@
 using NaughtyAttributes;
 using UISample.Infrastructure;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace UISample.Features
@@ -44,10 +45,9 @@ namespace UISample.Features
         [SerializeField] private Transform _target;
         [SerializeField] private int _chunkWitdh = 19;
         [SerializeField] private Tilemap _tilemap;
-        [SerializeField] private TileBase _ground, _trunk, _branch, _leaves;
+        [SerializeField] private TileBase _ground, _trunk, _branch, _leaves, _trunkHollow;
         [SerializeField] private RuleTile _crown;
         [SerializeField] private Vector2Int _branchesRange = new(2, 3);
-        [SerializeField] private int _moveDirection = 1;
         [SerializeField] private int _currentTreeX;
         [SerializeField] private int _treeSize = 5;
         private readonly List<Tree> _trees = new();
@@ -57,8 +57,9 @@ namespace UISample.Features
             set => _target = value;
         }
         public Node PlayerSpawnNode { get; private set; }
+        public int MoveDirection { get; private set; }
         public bool Initialized { get; private set; }
-        
+
         private void Awake()
         {
             _currentTreeX = 0;
@@ -70,6 +71,13 @@ namespace UISample.Features
             Initialized = true;
         }
 
+        public void SetDirection(int direction)
+        {
+            if(MoveDirection == 0)
+                MoveDirection = direction;
+
+        }
+
         private void Update()
         {
             if (_target == null)
@@ -77,7 +85,7 @@ namespace UISample.Features
 
             var targetPosX = _tilemap.WorldToCell(_target.position).x;
 
-            if (_moveDirection == 1)
+            if (MoveDirection == 1)
             {
                 if (targetPosX > _currentTreeX + _treeSize / 2)
                 {
@@ -87,13 +95,13 @@ namespace UISample.Features
                     GenerateTree(_currentTreeX + _treeSize + 1);
                 }
             }
-            else if (_moveDirection == -1)
+            else if (MoveDirection == -1)
             {
                 if (targetPosX < _currentTreeX - _treeSize / 2)
                 {
                     _currentTreeX -= _treeSize + 1;
-                    RemoveTree(_trees[0]);
-                    _trees.RemoveAt(0);
+                    RemoveTree(_trees[2]);
+                    _trees.RemoveAt(2);
                     GenerateTree(_currentTreeX - _treeSize - 1);
                 }
             }
@@ -116,6 +124,7 @@ namespace UISample.Features
             _tilemap.ClearAllTiles();
             _trees.Clear();
             _currentTreeX = 0;
+            MoveDirection = 0;
         }
         
         [Button("Generate")]
@@ -126,14 +135,15 @@ namespace UISample.Features
             GenerateTree(-6);
             CreateStartTree();
             GenerateTree(6);
-            if(_moveDirection == -1)
-                _trees.Reverse();
         }
         
         private void GenerateTree(int x)
         {
             var tree = new Tree(x);
-            _trees.Add(tree);
+            if(MoveDirection is 0 or 1)
+                _trees.Add(tree);
+            else
+                _trees.Insert(0, tree);
             
             int y = 0;
             System.Random rnd = new System.Random();
@@ -241,12 +251,12 @@ namespace UISample.Features
             AddNode(ENodeType.Branch, new Vector3Int(-1, 2, 0), _branch);
             AddNode(ENodeType.Leaves, new Vector3Int(-2, 2, 0), _leaves);
 
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 3, 0), _trunk);
+            var node = AddNode(ENodeType.Trunk, new Vector3Int(0, 3, 0), _trunkHollow);
+            PlayerSpawnNode = node;
             AddNode(ENodeType.Trunk, new Vector3Int(0, 4, 0), _trunk);
             AddNode(ENodeType.Trunk, new Vector3Int(0, 5, 0), _trunk);
             AddNode(ENodeType.Branch, new Vector3Int(1, 5, 0), _branch);
-            var node = AddNode(ENodeType.Leaves, new Vector3Int(2, 5, 0), _leaves);
-            PlayerSpawnNode = node;
+            AddNode(ENodeType.Leaves, new Vector3Int(2, 5, 0), _leaves);
 
             AddNode(ENodeType.Trunk, new Vector3Int(0, 6, 0), _trunk);
             AddNode(ENodeType.Trunk, new Vector3Int(0, 7, 0), _trunk);
