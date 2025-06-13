@@ -1,5 +1,6 @@
 ﻿using Plugins.ServiceLocator;
 using UISample.Features;
+using UISample.UI;
 using UnityEngine;
 
 namespace UISample.Infrastructure
@@ -16,6 +17,7 @@ namespace UISample.Infrastructure
         private void Start()
         {
             Install();
+            Initialize();
         }
 
         public override void Install()
@@ -23,20 +25,25 @@ namespace UISample.Infrastructure
             InstallSceneUI();
             InstallParallax();
             InstallCameraFollow();
-            Initialize();
         }
-        
+
         public void Initialize()
         {
+            ServiceLocator.Get<GameplayData>().ResetData();
             _mapGenerator.Initialize();
-            ServiceLocator.Get<GameplaySceneUI>().Initialize();
             _playerInstaller.Install();
             Initialized = true;
         }
 
         private void InstallSceneUI()
         {
-            ServiceLocator.Register<GameplaySceneUI>(new GameplaySceneUI(_uiContainer));
+            var sceneUI = ServiceLocator.Get<SceneUI>();
+            sceneUI.ClearControllers();
+            sceneUI.RegisterController(typeof(ControlsController), new ControlsController(_uiContainer));
+            sceneUI.RegisterController(typeof(HollowController), new HollowController(_uiContainer));
+            sceneUI.RegisterController(typeof(HUDController), new HUDController(_uiContainer));
+            sceneUI.ShowController<ControlsController>();
+            sceneUI.ShowController<HUDController>();
         }
         
         private void InstallParallax()

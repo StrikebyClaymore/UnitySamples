@@ -6,22 +6,29 @@ using UnityEngine;
 
 namespace UISample.Infrastructure
 {
-    public abstract class SceneUI : IService, IInitializable
+    public class SceneUI : IService, IInitializable
     {
-        protected readonly UIContainer _uiContainer;
         protected readonly Dictionary<Type, BaseController> _controllers = new();
         protected readonly Dictionary<Type, BaseController> _showedControllers = new();
         protected readonly Stack<List<Type>> _previousControllersStack = new();
         public bool Initialized { get; private set; }
 
-        protected SceneUI(UIContainer uiContainer)
-        {
-            _uiContainer = uiContainer;
-        }
-
         public virtual void Initialize()
         {
             Initialized = true;
+        }
+
+        public void RegisterController(Type type, BaseController controller)
+        {
+            _controllers.Add(type, controller);
+            controller.Hide(true);
+        }
+
+        public void ClearControllers()
+        {
+            _controllers.Clear();
+            _showedControllers.Clear();
+            _previousControllersStack.Clear();
         }
         
         public T GetController<T>() where T : BaseController
@@ -70,7 +77,7 @@ namespace UISample.Infrastructure
             }
         }
         
-        public void HideAllControllers(bool savePrevious = true, BaseController excluding = null)
+        public void HideAllControllers(bool instant = false, bool savePrevious = true, BaseController excluding = null)
         {
             if (savePrevious)
                 SaveCurrentControllers();
@@ -79,7 +86,7 @@ namespace UISample.Infrastructure
                 var controller = pair.Value;
                 if(controller == excluding)
                     continue;
-                controller.Hide();
+                controller.Hide(instant);
             }
             _showedControllers.Clear();
         }
@@ -88,8 +95,6 @@ namespace UISample.Infrastructure
         {
             _previousControllersStack.Clear();
         }
-        
-        protected abstract void CreateControllers(UIContainer uiContainer);
         
         private bool ShowController(Type type)
         {

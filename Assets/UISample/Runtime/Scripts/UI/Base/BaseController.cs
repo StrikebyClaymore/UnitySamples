@@ -1,3 +1,4 @@
+using Plugins.ServiceLocator;
 using UISample.Infrastructure;
 
 namespace UISample.UI
@@ -8,7 +9,7 @@ namespace UISample.UI
 
         protected BaseController()
         {
-            
+            _sceneUI = ServiceLocator.Get<SceneUI>();
         }
         
         public virtual void Show(bool instantly = false)

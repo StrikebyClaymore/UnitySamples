@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Plugins.ServiceLocator;
 using UISample.Data;
+using UISample.UI;
 using UnityEngine;
 
 namespace UISample.Infrastructure
@@ -15,6 +16,7 @@ namespace UISample.Infrastructure
         {
             InstallSceneLoading();
             InstallPlayerData();
+            InstallGameplayData();
             InstallApplicationLoop();
             InstallAudioSettings();
             InstallAudioPlayer();
@@ -25,7 +27,7 @@ namespace UISample.Infrastructure
         {
             ServiceLocator.Get<PlayerData>().Initialize();
             ServiceLocator.Get<AudioSettings>().Initialize();
-            ServiceLocator.Get<LoadingSceneUI>().Initialize();
+            ServiceLocator.Get<SceneUI>().Initialize();
             Initialized = true;
             StartCoroutine(LoadMainScene());
         }
@@ -34,9 +36,6 @@ namespace UISample.Infrastructure
         {
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             yield return sceneLoader.LoadSceneAsync(GameConstants.MainMenuSceneIndex);
-            var mainSceneInstaller = GameObject.FindObjectOfType<MainSceneInstaller>();
-            mainSceneInstaller.Install();
-            mainSceneInstaller.Initialize();
             sceneLoader.UnloadSceneAsync(GameConstants.LoadingSceneIndex);
         }
 
@@ -45,6 +44,11 @@ namespace UISample.Infrastructure
             ServiceLocator.Register<SceneLoader>(new SceneLoader());
         }
 
+        private void InstallGameplayData()
+        {
+            ServiceLocator.Register<GameplayData>(new GameplayData());
+        }
+        
         private void InstallPlayerData()
         {
             var defaultSettings = new PlayerDataDefaultSettings()
@@ -74,7 +78,10 @@ namespace UISample.Infrastructure
         
         private void InstallSceneUI()
         {
-            ServiceLocator.Register<LoadingSceneUI>(new LoadingSceneUI(_uiContainer));
+            var sceneUI = new SceneUI();
+            ServiceLocator.Register<SceneUI>(sceneUI);
+            sceneUI.RegisterController(typeof(LoadingController), new LoadingController(_uiContainer));
+            sceneUI.ShowController<LoadingController>();
         }
     }
 }

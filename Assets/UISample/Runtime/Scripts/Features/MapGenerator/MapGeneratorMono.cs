@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using NaughtyAttributes;
+using Pool;
 using UISample.Infrastructure;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace UISample.Features
@@ -52,7 +52,10 @@ namespace UISample.Features
         [SerializeField] private int _currentTreeX;
         [SerializeField] private int _treeSize = 5;
         [SerializeField] private int _hoolowSpawnNumber = 10;
+        [SerializeField] private Acorn _acornPrefab;
         private readonly List<Tree> _trees = new();
+        public readonly List<Acorn> _acorns = new();
+        public MonoPool<Acorn> AcornsPool { get; private set; }
         public IReadOnlyList<Tree> Trees => _trees;
         public Transform Target
         {
@@ -64,6 +67,8 @@ namespace UISample.Features
 
         private void Awake()
         {
+            if(Application.isPlaying)
+                AcornsPool = new MonoPool<Acorn>(_acornPrefab, 2, new GameObject("Acorns Pool").transform);
             _currentTreeX = 0;
         }
 
@@ -77,7 +82,6 @@ namespace UISample.Features
         {
             if(MoveDirection == 0)
                 MoveDirection = direction;
-
         }
 
         private void Update()
@@ -124,6 +128,9 @@ namespace UISample.Features
         private void ResetGame()
         {
             _tilemap.ClearAllTiles();
+            if (Application.isPlaying)
+                foreach (var acorn in _acorns)
+                    AcornsPool.Release(acorn);
             _trees.Clear();
             _currentTreeX = 0;
             MoveDirection = 0;
@@ -132,8 +139,7 @@ namespace UISample.Features
         [Button("Generate")]
         private void Generate()
         {
-            _tilemap.ClearAllTiles();
-            _trees.Clear();
+            ResetGame();
             GenerateTree(-6);
             CreateHollowTree(0);
             GenerateTree(6);
@@ -179,6 +185,8 @@ namespace UISample.Features
                 position = new Vector3Int(startX + direction, y - 1, 0);
                 _tilemap.SetTile(position, _branch);
                 tree.Nodes.Add(new Node(ENodeType.Branch, position));
+
+                TrySpawnAcorn(position);
                 
                 position = new Vector3Int(startX + direction * 2, y - 1, 0);
                 _tilemap.SetTile(position, _leaves);
@@ -195,6 +203,16 @@ namespace UISample.Features
             
             GenerateCrown(startX, y, 2, tree);
             ConnectNodes(tree);
+        }
+
+        private void TrySpawnAcorn(Vector3Int position)
+        {
+            if (Application.isPlaying && Random.Range(0, 100f) > 50f)
+            {
+                var acorn = AcornsPool.Get();
+                acorn.transform.position = MapToWorld(position);
+                _acorns.Add(acorn);
+            }
         }
 
         private void GenerateCrown(int centerX, int startY, int branchCount, Tree tree)
@@ -243,7 +261,10 @@ namespace UISample.Features
         private void CreateHollowTree(int startX)
         {
             var tree = new Tree(0);
-            _trees.Add(tree);
+            if(MoveDirection is 0 or 1)
+                _trees.Add(tree);
+            else
+                _trees.Insert(0, tree);
 
             Node AddNode(ENodeType type, Vector3Int position, TileBase tile)
             {
@@ -258,6 +279,9 @@ namespace UISample.Features
             AddNode(ENodeType.Trunk, new Vector3Int(startX, 2, 0), _trunk);
             AddNode(ENodeType.Branch, new Vector3Int(startX-1, 2, 0), _branch);
             AddNode(ENodeType.Leaves, new Vector3Int(startX-2, 2, 0), _leaves);
+            
+            if(startX != 0)
+                TrySpawnAcorn(new Vector3Int(startX-1, 2, 0));
 
             var node = AddNode(ENodeType.Hollow, new Vector3Int(startX, 3, 0), _trunkHollow);
             PlayerSpawnNode = node;
@@ -265,6 +289,9 @@ namespace UISample.Features
             AddNode(ENodeType.Trunk, new Vector3Int(startX, 5, 0), _trunk);
             AddNode(ENodeType.Branch, new Vector3Int(startX+1, 5, 0), _branch);
             AddNode(ENodeType.Leaves, new Vector3Int(startX+2, 5, 0), _leaves);
+            
+            if(startX != 0)
+                TrySpawnAcorn(new Vector3Int(startX+1, 5, 0));
 
             AddNode(ENodeType.Trunk, new Vector3Int(startX, 6, 0), _trunk);
             AddNode(ENodeType.Trunk, new Vector3Int(startX, 7, 0), _trunk);

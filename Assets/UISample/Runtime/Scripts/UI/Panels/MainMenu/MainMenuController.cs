@@ -14,7 +14,11 @@ namespace UISample.UI
             _view = uiContainer.GetView<MainMenuView>();
             _view.PlayButton.onClick.AddListener(PlayPressed);
             _view.SettingsButton.onClick.AddListener(SettingsPressed);
-            _sceneUI = ServiceLocator.Get<MainSceneUI>();
+            var playerData = ServiceLocator.Get<PlayerData>();
+            playerData.Acorns.OnValueChanged += UpdateAcorns;
+            playerData.Gems.OnValueChanged += UpdateGems;
+            UpdateAcorns(playerData.Acorns.Value);
+            UpdateGems(playerData.Gems.Value);
         }
 
         public override void Show(bool instantly = false)
@@ -36,6 +40,16 @@ namespace UISample.UI
         private void SettingsPressed()
         {
             _sceneUI.ShowController<SettingsController>();
+        }
+        
+        private void UpdateAcorns(int value)
+        {
+            _view.AcornsText.text = value.ToString();
+        }
+        
+        private void UpdateGems(int value)
+        {
+            _view.GemsText.text = value.ToString();
         }
     }
 }

@@ -59,6 +59,7 @@ MonoBehaviour:
   _currentTreeX: 0
   _treeSize: 5
   _hoolowSpawnNumber: 10
+  _acornPrefab: {fileID: 3480949554858978339, guid: e7a304a68963949488ca07355cf04e67, type: 3}
 --- !u!1 &6523422981970689121
 GameObject:
   m_ObjectHideFlags: 0

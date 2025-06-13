@@ -13,7 +13,6 @@ namespace UISample.UI
             _view = uiContainer.GetView<SettingsView>();
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _audioSettings = ServiceLocator.Get<AudioSettings>();
-            _sceneUI = ServiceLocator.Get<MainSceneUI>();
             
             _audioSettings.OnSoundVolumeChanged.AddListener(SoundVolumeChanged);
             _audioSettings.OnMusicVolumeChanged.AddListener(MusicVolumeChanged);

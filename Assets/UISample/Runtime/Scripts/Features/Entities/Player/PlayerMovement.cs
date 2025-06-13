@@ -13,7 +13,7 @@ namespace UISample.Features
         private readonly int _moveDistance = 1;
         private readonly float _moveInTreeDuration = 0.3f;
         private readonly float _moveBetweenTreeDuration = 0.7f;
-        private readonly GameplaySceneUI _sceneUI;
+        private readonly SceneUI _sceneUI;
         private Vector3Int _direction = Vector3Int.zero;
         private bool _isMoving;
         private MapGeneratorMono.Tree _currentTree;
@@ -28,8 +28,8 @@ namespace UISample.Features
             _currentNode = _mapGenerator.PlayerSpawnNode;
             _visitedHollow = _currentNode;
             _transform.position = _mapGenerator.MapToWorld(_currentNode.Position);
-            var controls = ServiceLocator.Get<GameplaySceneUI>().GetController<ControlsController>();
-            _sceneUI = ServiceLocator.Get<GameplaySceneUI>();
+            _sceneUI = ServiceLocator.Get<SceneUI>();
+            var controls = _sceneUI.GetController<ControlsController>();
             controls.OnControlPressed.AddListener(HandleControlPressed);
             controls.OnControlReleased.AddListener(HandleControlReleased);
         }

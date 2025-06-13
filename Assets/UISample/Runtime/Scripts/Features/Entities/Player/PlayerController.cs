@@ -1,4 +1,5 @@
 ﻿using UISample.Infrastructure;
+using UnityEngine;
 
 namespace UISample.Features
 {
@@ -6,11 +7,15 @@ namespace UISample.Features
     {
         private readonly PlayerView _view;
         private readonly PlayerMovement _movement;
+        private readonly PickupHandler _pickupHandler;
+        public PickupHandler PickupHandler => _pickupHandler;
         
         public PlayerController(PlayerView view, MapGeneratorMono mapGenerator)
         {
             _view = view;
             _movement = new PlayerMovement(_view, mapGenerator);
+            _pickupHandler = new PickupHandler(mapGenerator);
+            _view.OnTriggerEnter.AddListener(OnTriggerEnter);
         }
 
         public void CustomUpdate()
@@ -22,5 +27,13 @@ namespace UISample.Features
 }
 
         public void CustomLateUpdate() { }
+        
+        private void OnTriggerEnter(Collider2D collider)
+        {
+            if (collider.TryGetComponent<PickupItem>(out var item))
+            {
+                _pickupHandler.Pickup(item);
+            }
+        }
     }
 }

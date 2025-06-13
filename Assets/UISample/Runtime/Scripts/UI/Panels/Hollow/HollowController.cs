@@ -1,7 +1,6 @@
 ﻿using Plugins.ServiceLocator;
 using UISample.Data;
 using UISample.Infrastructure;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UISample.UI
@@ -15,7 +14,6 @@ namespace UISample.UI
             _view = uiContainer.GetView<HollowView>();
             _view.Stop.onClick.AddListener(StopPressed);
             _view.Continue.onClick.AddListener(ContinuePressed);
-            _sceneUI = ServiceLocator.Get<GameplaySceneUI>();
         }
 
         public override void Show(bool instantly = false)

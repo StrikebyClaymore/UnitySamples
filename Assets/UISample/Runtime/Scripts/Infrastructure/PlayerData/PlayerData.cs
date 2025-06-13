@@ -9,6 +9,8 @@ namespace UISample.Infrastructure
         public readonly PlayerDataValue<float> MusicVolume;
         public readonly PlayerDataValue<float> UIVolume;
         public readonly PlayerDataValue<string> Language;
+        public readonly PlayerDataValue<int> Acorns;
+        public readonly PlayerDataValue<int> Gems;
 
         public PlayerData(PlayerDataDefaultSettings defaultSettings)
         {
@@ -16,6 +18,8 @@ namespace UISample.Infrastructure
             MusicVolume = new PlayerDataValue<float>(Data, PlayerDataConstants.MusicVolume, defaultSettings.MusicVolume);
             UIVolume = new PlayerDataValue<float>(Data, PlayerDataConstants.UIVolume, defaultSettings.UIVolume);
             Language = new PlayerDataValue<string>(Data, PlayerDataConstants.Language, defaultSettings.Language);
+            Acorns = new PlayerDataValue<int>(Data, PlayerDataConstants.Acorns, 0);
+            Gems = new PlayerDataValue<int>(Data, PlayerDataConstants.Gems, 0);
         }
 
         public void Initialize()
@@ -24,6 +28,8 @@ namespace UISample.Infrastructure
             MusicVolume.Initialize();
             UIVolume.Initialize();
             Language.Initialize();
+            Acorns.Initialize();
+            Gems.Initialize();
         }
     }
 }
