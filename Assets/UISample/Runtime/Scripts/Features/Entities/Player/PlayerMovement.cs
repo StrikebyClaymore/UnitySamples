@@ -13,10 +13,12 @@ namespace UISample.Features
         private readonly int _moveDistance = 1;
         private readonly float _moveInTreeDuration = 0.3f;
         private readonly float _moveBetweenTreeDuration = 0.7f;
+        private readonly GameplaySceneUI _sceneUI;
         private Vector3Int _direction = Vector3Int.zero;
         private bool _isMoving;
         private MapGeneratorMono.Tree _currentTree;
         private MapGeneratorMono.Node _currentNode;
+        private MapGeneratorMono.Node _visitedHollow;
         
         public PlayerMovement(PlayerView view, MapGeneratorMono mapGenerator)
         {
@@ -24,8 +26,10 @@ namespace UISample.Features
             _mapGenerator = mapGenerator;
             _currentTree = _mapGenerator.Trees[1];
             _currentNode = _mapGenerator.PlayerSpawnNode;
+            _visitedHollow = _currentNode;
             _transform.position = _mapGenerator.MapToWorld(_currentNode.Position);
             var controls = ServiceLocator.Get<GameplaySceneUI>().GetController<ControlsController>();
+            _sceneUI = ServiceLocator.Get<GameplaySceneUI>();
             controls.OnControlPressed.AddListener(HandleControlPressed);
             controls.OnControlReleased.AddListener(HandleControlReleased);
         }
@@ -41,6 +45,11 @@ namespace UISample.Features
                 MoveInTree();
                 _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveInTreeDuration).OnComplete(() =>
                 {
+                    if (_direction == Vector3Int.zero && _currentNode != _visitedHollow && _currentNode.Type is MapGeneratorMono.ENodeType.Hollow)
+                    {
+                        _visitedHollow = _currentNode;
+                        _sceneUI.ShowController<HollowController>();
+                    }
                     _isMoving = false;
                 });
             }

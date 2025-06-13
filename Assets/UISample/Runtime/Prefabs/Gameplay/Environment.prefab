@@ -56,9 +56,9 @@ MonoBehaviour:
   _trunkHollow: {fileID: 11400000, guid: 4ed29565e5a0777428f5ffb61de800c3, type: 2}
   _crown: {fileID: 11400000, guid: 3b9f5ffe5db9eec439139c6b67f38df1, type: 2}
   _branchesRange: {x: 2, y: 3}
-  _moveDirection: 1
   _currentTreeX: 0
   _treeSize: 5
+  _hoolowSpawnNumber: 10
 --- !u!1 &6523422981970689121
 GameObject:
   m_ObjectHideFlags: 0

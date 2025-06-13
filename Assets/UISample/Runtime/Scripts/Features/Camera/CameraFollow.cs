@@ -45,7 +45,7 @@ namespace UISample.Features
         
         private void Follow()
         {
-            if(_target is null)
+            if(_target == null)
                 return;
             var targetPosition = _target.position + _offset;
             if (_bounds.Enabled)

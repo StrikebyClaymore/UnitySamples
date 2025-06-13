@@ -16,6 +16,7 @@ namespace UISample.Features
             Branch,
             Leaves,
             Crown,
+            Hollow,
         }
         
         public class Node
@@ -50,6 +51,7 @@ namespace UISample.Features
         [SerializeField] private Vector2Int _branchesRange = new(2, 3);
         [SerializeField] private int _currentTreeX;
         [SerializeField] private int _treeSize = 5;
+        [SerializeField] private int _hoolowSpawnNumber = 10;
         private readonly List<Tree> _trees = new();
         public IReadOnlyList<Tree> Trees => _trees;
         public Transform Target
@@ -133,13 +135,19 @@ namespace UISample.Features
             _tilemap.ClearAllTiles();
             _trees.Clear();
             GenerateTree(-6);
-            CreateStartTree();
+            CreateHollowTree(0);
             GenerateTree(6);
         }
         
-        private void GenerateTree(int x)
+        private void GenerateTree(int startX)
         {
-            var tree = new Tree(x);
+            if (startX != _treeSize + 1 && (startX / (_treeSize + 1) - 1) % _hoolowSpawnNumber == 0)
+            {
+                CreateHollowTree(startX);
+                return;
+            }
+            
+            var tree = new Tree(startX);
             if(MoveDirection is 0 or 1)
                 _trees.Add(tree);
             else
@@ -155,7 +163,7 @@ namespace UISample.Features
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    position = new Vector3Int(x, y++, 0);
+                    position = new Vector3Int(startX, y++, 0);
                     _tilemap.SetTile(position, _trunk);
                     var node = new Node(ENodeType.Trunk, position);
                     tree.Nodes.Add(node);
@@ -168,24 +176,24 @@ namespace UISample.Features
                     direction = -previousDirection.Value;
                 previousDirection = direction;
 
-                position = new Vector3Int(x + direction, y - 1, 0);
+                position = new Vector3Int(startX + direction, y - 1, 0);
                 _tilemap.SetTile(position, _branch);
                 tree.Nodes.Add(new Node(ENodeType.Branch, position));
                 
-                position = new Vector3Int(x + direction * 2, y - 1, 0);
+                position = new Vector3Int(startX + direction * 2, y - 1, 0);
                 _tilemap.SetTile(position, _leaves);
                 tree.Nodes.Add(new Node(ENodeType.Leaves, position));
             }
 
-            position = new Vector3Int(x, y++, 0);
+            position = new Vector3Int(startX, y++, 0);
             _tilemap.SetTile(position, _trunk);
             tree.Nodes.Add(new Node(ENodeType.Trunk, position));
             
-            position = new Vector3Int(x, y++, 0);
+            position = new Vector3Int(startX, y++, 0);
             _tilemap.SetTile(position, _trunk);
             tree.Nodes.Add(new Node(ENodeType.Trunk, position));
             
-            GenerateCrown(x, y, 2, tree);
+            GenerateCrown(startX, y, 2, tree);
             ConnectNodes(tree);
         }
 
@@ -232,7 +240,7 @@ namespace UISample.Features
             return false;
         }
 
-        private void CreateStartTree()
+        private void CreateHollowTree(int startX)
         {
             var tree = new Tree(0);
             _trees.Add(tree);
@@ -245,39 +253,39 @@ namespace UISample.Features
                 return node;
             }
 
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 0, 0), _trunk);
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 1, 0), _trunk);
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 2, 0), _trunk);
-            AddNode(ENodeType.Branch, new Vector3Int(-1, 2, 0), _branch);
-            AddNode(ENodeType.Leaves, new Vector3Int(-2, 2, 0), _leaves);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 0, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 1, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 2, 0), _trunk);
+            AddNode(ENodeType.Branch, new Vector3Int(startX-1, 2, 0), _branch);
+            AddNode(ENodeType.Leaves, new Vector3Int(startX-2, 2, 0), _leaves);
 
-            var node = AddNode(ENodeType.Trunk, new Vector3Int(0, 3, 0), _trunkHollow);
+            var node = AddNode(ENodeType.Hollow, new Vector3Int(startX, 3, 0), _trunkHollow);
             PlayerSpawnNode = node;
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 4, 0), _trunk);
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 5, 0), _trunk);
-            AddNode(ENodeType.Branch, new Vector3Int(1, 5, 0), _branch);
-            AddNode(ENodeType.Leaves, new Vector3Int(2, 5, 0), _leaves);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 4, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 5, 0), _trunk);
+            AddNode(ENodeType.Branch, new Vector3Int(startX+1, 5, 0), _branch);
+            AddNode(ENodeType.Leaves, new Vector3Int(startX+2, 5, 0), _leaves);
 
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 6, 0), _trunk);
-            AddNode(ENodeType.Trunk, new Vector3Int(0, 7, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 6, 0), _trunk);
+            AddNode(ENodeType.Trunk, new Vector3Int(startX, 7, 0), _trunk);
 
-            AddNode(ENodeType.Crown, new Vector3Int(0, 8, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(1, 8, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(2, 8, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-1, 8, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-2, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+1, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+2, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-1, 8, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-2, 8, 0), _crown);
 
-            AddNode(ENodeType.Crown, new Vector3Int(0, 9, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(1, 9, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(2, 9, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-1, 9, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-2, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+1, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+2, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-1, 9, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-2, 9, 0), _crown);
 
-            AddNode(ENodeType.Crown, new Vector3Int(0, 10, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(1, 10, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(2, 10, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-1, 10, 0), _crown);
-            AddNode(ENodeType.Crown, new Vector3Int(-2, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+1, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX+2, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-1, 10, 0), _crown);
+            AddNode(ENodeType.Crown, new Vector3Int(startX-2, 10, 0), _crown);
             
             ConnectNodes(tree);
         }
