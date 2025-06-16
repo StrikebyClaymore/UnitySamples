@@ -27,7 +27,7 @@ namespace UISample.Features
         public int MoveDirection { get; private set; }
         public bool Initialized { get; private set; }
 
-        public MapGenerator(ConfigsContainer configs, Tilemap tilemap)
+        public MapGenerator(GameplayConfigs configs, Tilemap tilemap)
         {
             _config = configs.MapGeneratorConfig;
             _tilemap = tilemap;

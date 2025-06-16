@@ -11,6 +11,7 @@ namespace UISample.Infrastructure
         public readonly PlayerDataValue<string> Language;
         public readonly PlayerDataValue<int> Acorns;
         public readonly PlayerDataValue<int> Gems;
+        public readonly PlayerDataValue<bool> LastReward;
 
         public PlayerData(PlayerDataDefaultSettings defaultSettings)
         {

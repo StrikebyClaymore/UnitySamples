@@ -14,7 +14,7 @@ namespace Plugins.ServiceLocator
             _services.Add(typeof(TService), service);
         }
 
-        public static TService Get<TService>()
+        public static TService Get<TService>() where TService : IService
         {
             return Get<TService>(_services);
         }
@@ -24,13 +24,18 @@ namespace Plugins.ServiceLocator
             _localServices.Add(typeof(TService), service);
         }
 
-        public static TService GetLocal<TService>()
+        public static TService GetLocal<TService>() where TService : ILocalService
         {
             return Get<TService>(_localServices);
         }
 
         public static void ClearLocal()
         {
+            foreach (var service in _localServices.Values)
+            {
+                if (service is IDisposable disposable)
+                    disposable.Dispose();
+            }
             _localServices.Clear();
         }
         

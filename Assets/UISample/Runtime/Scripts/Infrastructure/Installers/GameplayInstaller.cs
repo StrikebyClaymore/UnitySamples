@@ -8,7 +8,7 @@ namespace UISample.Infrastructure
 {
     public class GameplayInstaller : MonoInstaller, IInitializable
     {
-        [SerializeField] private ConfigsContainer _configsContainer;
+        [SerializeField] private GameplayConfigs _configsContainer;
         [SerializeField] private UIContainer _uiContainer;
         [SerializeField] private CameraFollow _cameraFollow;
         [SerializeField] private Parallax _parallax;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 490729343102403663}
   - component: {fileID: 3210417018793039567}
-  - component: {fileID: 605985462268253785}
+  - component: {fileID: 582954064621752174}
   m_Layer: 0
   m_Name: ApplicationInstaller
   m_TagString: Untagged
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uiContainer: {fileID: 4857180322369032431}
-  _configsContainer: {fileID: 605985462268253785}
---- !u!114 &605985462268253785
+  _configsContainer: {fileID: 582954064621752174}
+--- !u!114 &582954064621752174
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,11 +56,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 579532157822183137}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc42275f78b4518af0e04f9d697e924, type: 3}
+  m_Script: {fileID: 11500000, guid: 35c493e1fc524e508643bc70c3e836eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <AudioConfig>k__BackingField: {fileID: 11400000, guid: 54cb8e1f59618344eae6971849729594, type: 2}
-  <MapGeneratorConfig>k__BackingField: {fileID: 11400000, guid: b1c97f5af9eef394a94c28e5df924efa, type: 2}
 --- !u!1 &1164081028536630635
 GameObject:
   m_ObjectHideFlags: 0

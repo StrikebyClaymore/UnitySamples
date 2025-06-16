@@ -1,6 +1,9 @@
-﻿using Plugins.ServiceLocator;
+﻿using System;
+using Plugins.ServiceLocator;
 using UISample.Data;
+using UISample.Features;
 using UISample.Infrastructure;
+using UISample.Utility;
 using UnityEngine.SceneManagement;
 
 namespace UISample.UI
@@ -19,6 +22,11 @@ namespace UISample.UI
             playerData.Gems.OnValueChanged += UpdateGems;
             UpdateAcorns(playerData.Acorns.Value);
             UpdateGems(playerData.Gems.Value);
+            _view.DailyCalendarNotification.Hide();
+            var dailyCalendar = ServiceLocator.GetLocal<DailyCalendarManager>();
+            dailyCalendar.Timer.OnUpdate += UpdateCalendarTime;
+            dailyCalendar.Timer.OnComplete += UpdateCalendarNotification;
+            _view.DailyCalendarButton.onClick.AddListener(DailyCalendarPressed);
         }
 
         public override void Show(bool instantly = false)
@@ -50,6 +58,21 @@ namespace UISample.UI
         private void UpdateGems(int value)
         {
             _view.GemsText.text = value.ToString();
+        }
+        
+        private void UpdateCalendarTime(TimeSpan time)
+        {
+            _view.DailyCalendarTimerText.SetText(time.ToHHMMSS());
+        }
+
+        private void UpdateCalendarNotification()
+        {
+            _view.DailyCalendarNotification.Show();
+        }
+        
+        private void DailyCalendarPressed()
+        {
+            _sceneUI.ShowController<DailyCalendarController>();
         }
     }
 }

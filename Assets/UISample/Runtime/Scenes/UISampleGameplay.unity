@@ -357,8 +357,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1852212202}
   - component: {fileID: 1852212203}
-  - component: {fileID: 1852212204}
   - component: {fileID: 1852212205}
+  - component: {fileID: 1852212204}
   m_Layer: 0
   m_Name: SceneInstaller
   m_TagString: Untagged
@@ -422,10 +422,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1852212201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3bc42275f78b4518af0e04f9d697e924, type: 3}
+  m_Script: {fileID: 11500000, guid: 3c1cd8a6fab740d99f06fc7883f80d44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <AudioConfig>k__BackingField: {fileID: 11400000, guid: 54cb8e1f59618344eae6971849729594, type: 2}
   <MapGeneratorConfig>k__BackingField: {fileID: 11400000, guid: b1c97f5af9eef394a94c28e5df924efa, type: 2}
 --- !u!1001 &7213042478151354924
 PrefabInstance:

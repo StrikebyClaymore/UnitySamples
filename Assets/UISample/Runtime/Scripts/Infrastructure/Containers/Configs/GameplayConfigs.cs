@@ -3,9 +3,8 @@ using UnityEngine;
 
 namespace UISample.Infrastructure
 {
-    public class ConfigsContainer : MonoBehaviour
+    public class GameplayConfigs : MonoBehaviour
     {
-        [field: SerializeField] public AudioConfig AudioConfig { get; private set; }
         [field: SerializeField] public MapGeneratorConfig MapGeneratorConfig { get; private set; }
     }
 }

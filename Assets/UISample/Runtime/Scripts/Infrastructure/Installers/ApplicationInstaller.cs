@@ -9,7 +9,7 @@ namespace UISample.Infrastructure
     public class ApplicationInstaller : MonoInstaller, IInitializable
     {
         [SerializeField] private UIContainer _uiContainer;
-        [SerializeField] private ConfigsContainer _configsContainer;
+        [SerializeField] private ApplicationConfigs _configsContainer;
         public bool Initialized { get; private set; }
 
         public override void Install()
