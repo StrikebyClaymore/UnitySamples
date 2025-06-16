@@ -10,6 +10,5 @@ namespace UISample.Data
         [field: SerializeField] public float DefaultMusicVolume { get; private set; } = 0.5f;
         [field: SerializeField] public float DefaultUIVolume { get; private set; } = 0.5f;
         [field: SerializeField] public AudioClip MainMusicClip { get; private set; }
-        [field: SerializeField] public AudioClip TestClip { get; private set; }
     }
 }

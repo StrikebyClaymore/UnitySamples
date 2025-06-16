@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8791068567612735887}
-  - component: {fileID: 5807124954726479469}
   m_Layer: 6
   m_Name: Environment
   m_TagString: Untagged
@@ -34,32 +33,6 @@ Transform:
   - {fileID: 7235761833109462799}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5807124954726479469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134038193280144693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67cabbb3ba804e9592d3f38b9f83a891, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _target: {fileID: 0}
-  _chunkWitdh: 19
-  _tilemap: {fileID: 4767904835290756223}
-  _ground: {fileID: 11400000, guid: 247123f2ff7d8284eb1b3b3598494751, type: 2}
-  _trunk: {fileID: 11400000, guid: 52a76f9802a4198479149dcfdf22ecf0, type: 2}
-  _branch: {fileID: 11400000, guid: 62c2cb4daca1761488bc7ddb9c65faa7, type: 2}
-  _leaves: {fileID: 11400000, guid: bff49fc3afbd9ba40963e7fcc576ad3d, type: 2}
-  _trunkHollow: {fileID: 11400000, guid: 4ed29565e5a0777428f5ffb61de800c3, type: 2}
-  _crown: {fileID: 11400000, guid: 3b9f5ffe5db9eec439139c6b67f38df1, type: 2}
-  _branchesRange: {x: 2, y: 3}
-  _currentTreeX: 0
-  _treeSize: 5
-  _hoolowSpawnNumber: 10
-  _acornPrefab: {fileID: 3480949554858978339, guid: e7a304a68963949488ca07355cf04e67, type: 3}
 --- !u!1 &6523422981970689121
 GameObject:
   m_ObjectHideFlags: 0

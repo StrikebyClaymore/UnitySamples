@@ -14,6 +14,7 @@ namespace UISample.Infrastructure
 
         public override void Install()
         {
+            ServiceLocator.ClearLocal();
             InstallSceneLoading();
             InstallPlayerData();
             InstallGameplayData();

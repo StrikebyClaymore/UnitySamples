@@ -51,6 +51,8 @@ namespace UISample.Infrastructure
         
         public void PlayMusic(AudioClip clip)
         {
+            if(_backgroundMusic && _backgroundMusic.clip == clip)
+                return;
             _backgroundMusic = PlaySound(clip, true, _audioSettings.MusicVolume);
         }
         

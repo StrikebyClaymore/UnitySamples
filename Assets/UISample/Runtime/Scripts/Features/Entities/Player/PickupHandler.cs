@@ -10,7 +10,7 @@ namespace UISample.Features
         private readonly GameplayData _gameplayData;
         private readonly MonoPool<Acorn> _acornsPool;
         
-        public PickupHandler(MapGeneratorMono mapGenerator)
+        public PickupHandler(MapGenerator mapGenerator)
         {
             _playerData = ServiceLocator.Get<PlayerData>();
             _gameplayData = ServiceLocator.Get<GameplayData>();

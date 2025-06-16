@@ -17,6 +17,7 @@ namespace UISample.Infrastructure
 
         public override void Install()
         {
+            ServiceLocator.ClearLocal();
             InstallSceneUI();
         }
 

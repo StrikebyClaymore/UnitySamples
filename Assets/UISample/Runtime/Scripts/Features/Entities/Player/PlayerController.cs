@@ -8,9 +8,8 @@ namespace UISample.Features
         private readonly PlayerView _view;
         private readonly PlayerMovement _movement;
         private readonly PickupHandler _pickupHandler;
-        public PickupHandler PickupHandler => _pickupHandler;
         
-        public PlayerController(PlayerView view, MapGeneratorMono mapGenerator)
+        public PlayerController(PlayerView view, MapGenerator mapGenerator)
         {
             _view = view;
             _movement = new PlayerMovement(_view, mapGenerator);

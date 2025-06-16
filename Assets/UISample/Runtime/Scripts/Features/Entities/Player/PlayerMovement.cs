@@ -9,18 +9,17 @@ namespace UISample.Features
     public class PlayerMovement : IUpdate
     {
         private readonly Transform _transform;
-        private readonly MapGeneratorMono _mapGenerator;
-        private readonly int _moveDistance = 1;
+        private readonly MapGenerator _mapGenerator;
         private readonly float _moveInTreeDuration = 0.3f;
         private readonly float _moveBetweenTreeDuration = 0.7f;
         private readonly SceneUI _sceneUI;
         private Vector3Int _direction = Vector3Int.zero;
         private bool _isMoving;
-        private MapGeneratorMono.Tree _currentTree;
-        private MapGeneratorMono.Node _currentNode;
-        private MapGeneratorMono.Node _visitedHollow;
+        private MapTree _currentTree;
+        private MapNode _currentNode;
+        private MapNode _visitedHollow;
         
-        public PlayerMovement(PlayerView view, MapGeneratorMono mapGenerator)
+        public PlayerMovement(PlayerView view, MapGenerator mapGenerator)
         {
             _transform = view.transform;
             _mapGenerator = mapGenerator;
@@ -45,7 +44,7 @@ namespace UISample.Features
                 MoveInTree();
                 _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveInTreeDuration).OnComplete(() =>
                 {
-                    if (_direction == Vector3Int.zero && _currentNode != _visitedHollow && _currentNode.Type is MapGeneratorMono.ENodeType.Hollow)
+                    if (_direction == Vector3Int.zero && _currentNode != _visitedHollow && _currentNode.Type is EMapNodeType.Hollow)
                     {
                         _visitedHollow = _currentNode;
                         _sceneUI.ShowController<HollowController>();
@@ -92,7 +91,7 @@ namespace UISample.Features
 
         private void MoveBetweenTree()
         {
-            if (_currentNode.Type is MapGeneratorMono.ENodeType.Leaves)
+            if (_currentNode.Type is EMapNodeType.Leaves)
             {
                 foreach (var tree in _mapGenerator.Trees)
                 {
@@ -100,7 +99,7 @@ namespace UISample.Features
                         continue;
                     foreach (var node in tree.Nodes)
                     {
-                        if (node.Type is MapGeneratorMono.ENodeType.Leaves &&
+                        if (node.Type is EMapNodeType.Leaves &&
                             Mathf.Abs(_currentNode.Position.x - node.Position.x) +
                             Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
                         {
@@ -130,7 +129,7 @@ namespace UISample.Features
         {
             if (_mapGenerator.MoveDirection != 0 && _direction.x != _mapGenerator.MoveDirection)
                 return false;
-            if (_currentNode.Type is MapGeneratorMono.ENodeType.Leaves)
+            if (_currentNode.Type is EMapNodeType.Leaves)
             {
                 foreach (var tree in _mapGenerator.Trees)
                 {
@@ -138,7 +137,7 @@ namespace UISample.Features
                         continue;
                     foreach (var node in tree.Nodes)
                     {
-                        if (node.Type is MapGeneratorMono.ENodeType.Leaves &&
+                        if (node.Type is EMapNodeType.Leaves &&
                             Mathf.Abs(_currentNode.Position.x - node.Position.x) +
                             Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
                         {

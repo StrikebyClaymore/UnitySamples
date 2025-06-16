@@ -7,6 +7,7 @@ namespace Plugins.ServiceLocator
     {
         private static readonly Dictionary<Type, object> _services = new();
         public static IEnumerable<object> Services => _services.Values;
+        private static readonly Dictionary<Type, object> _localServices = new();
 
         public static void Register<TService>(TService service) where TService : IService
         {
@@ -15,10 +16,30 @@ namespace Plugins.ServiceLocator
 
         public static TService Get<TService>()
         {
+            return Get<TService>(_services);
+        }
+        
+        public static void RegisterLocal<TService>(TService service) where TService : ILocalService
+        {
+            _localServices.Add(typeof(TService), service);
+        }
+
+        public static TService GetLocal<TService>()
+        {
+            return Get<TService>(_localServices);
+        }
+
+        public static void ClearLocal()
+        {
+            _localServices.Clear();
+        }
+        
+        private static TService Get<TService>(Dictionary<Type, object> storage)
+        {
             var type = typeof(TService);
-            if (_services.TryGetValue(type, out var service))
+            if (storage.TryGetValue(type, out var service))
                 return (TService)service;
-            foreach (var kvp in _services)
+            foreach (var kvp in storage)
             {
                 if (type.IsAssignableFrom(kvp.Key))
                     return (TService)kvp.Value;

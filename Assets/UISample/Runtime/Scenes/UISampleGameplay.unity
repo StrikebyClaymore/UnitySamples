@@ -358,6 +358,7 @@ GameObject:
   - component: {fileID: 1852212202}
   - component: {fileID: 1852212203}
   - component: {fileID: 1852212204}
+  - component: {fileID: 1852212205}
   m_Layer: 0
   m_Name: SceneInstaller
   m_TagString: Untagged
@@ -392,11 +393,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de12a51263f8499aa56a3fb647950a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _configsContainer: {fileID: 1852212205}
   _uiContainer: {fileID: 7440921969116412613}
   _cameraFollow: {fileID: 1816166101}
   _parallax: {fileID: 757406136}
   _playerInstaller: {fileID: 1852212204}
-  _mapGenerator: {fileID: 7213042478151354926}
+  _tilemap: {fileID: 7213042478151354925}
 --- !u!114 &1852212204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +413,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraFollow: {fileID: 1816166101}
   _playerPrefab: {fileID: 817500186482017702, guid: 6f7e6c35bb2cd084d99cdb42565903df, type: 3}
-  _mapGenerator: {fileID: 7213042478151354926}
+--- !u!114 &1852212205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852212201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bc42275f78b4518af0e04f9d697e924, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <AudioConfig>k__BackingField: {fileID: 11400000, guid: 54cb8e1f59618344eae6971849729594, type: 2}
+  <MapGeneratorConfig>k__BackingField: {fileID: 11400000, guid: b1c97f5af9eef394a94c28e5df924efa, type: 2}
 --- !u!1001 &7213042478151354924
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1648,22 +1663,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5807124954726479469, guid: 000cba3c3d44bc54cae480f9a7a91583, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 000cba3c3d44bc54cae480f9a7a91583, type: 3}
---- !u!114 &7213042478151354926 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5807124954726479469, guid: 000cba3c3d44bc54cae480f9a7a91583, type: 3}
+--- !u!1839735485 &7213042478151354925 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 4767904835290756223, guid: 000cba3c3d44bc54cae480f9a7a91583, type: 3}
   m_PrefabInstance: {fileID: 7213042478151354924}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67cabbb3ba804e9592d3f38b9f83a891, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7440921969116412613 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1195544368161025383, guid: 1d7d7608c8d9d064c8647fed16a8f756, type: 3}
