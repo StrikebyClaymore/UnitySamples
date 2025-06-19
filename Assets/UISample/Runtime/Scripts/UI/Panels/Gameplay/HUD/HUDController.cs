@@ -13,6 +13,7 @@ namespace UISample.UI
             var gameplayData = ServiceLocator.Get<GameplayData>();
             gameplayData.Acorns.OnValueChanged += UpdateAcorns;
             UpdateAcorns(gameplayData.Acorns.Value);
+            _view.PauseButton.onClick.AddListener(PausePressed);
         }
 
         public override void Show(bool instantly = false)
@@ -24,10 +25,15 @@ namespace UISample.UI
         {
             _view.Hide(instantly);
         }
-        
+
         private void UpdateAcorns(int value)
         {
             _view.AcornsText.text = value.ToString();
+        }
+
+        private void PausePressed()
+        {
+            _sceneUI.ShowController<PauseController>();
         }
     }
 }

@@ -11,8 +11,10 @@ namespace UISample.UI
         public SettingsController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<SettingsView>();
-            _view.CloseButton.onClick.AddListener(ClosePressed);
             _audioSettings = ServiceLocator.Get<AudioSettings>();
+            
+            _view.CloseButton.onClick.AddListener(ClosePressed);
+            _view.ShadowCloseButton.onClick.AddListener(ClosePressed);
             
             _audioSettings.OnSoundVolumeChanged.AddListener(SoundVolumeChanged);
             _audioSettings.OnMusicVolumeChanged.AddListener(MusicVolumeChanged);
@@ -71,7 +73,6 @@ namespace UISample.UI
         
         private void UIVolumeChanged(float value)
         {
-            _view.AudioSource.volume = value;
             _view.UISlider.SetValueWithoutNotify(value);
             _view.UIIcon.sprite = value > 0 ? _view.UIOn : _view.UIOff;
         }

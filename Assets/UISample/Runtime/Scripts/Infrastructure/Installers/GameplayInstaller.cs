@@ -46,6 +46,7 @@ namespace UISample.Infrastructure
             sceneUI.RegisterController(typeof(ControlsController), new ControlsController(_uiContainer));
             sceneUI.RegisterController(typeof(HollowController), new HollowController(_uiContainer));
             sceneUI.RegisterController(typeof(HUDController), new HUDController(_uiContainer));
+            sceneUI.RegisterController(typeof(PauseController), new PauseController(_uiContainer));
             sceneUI.ShowController<ControlsController>();
             sceneUI.ShowController<HUDController>();
         }

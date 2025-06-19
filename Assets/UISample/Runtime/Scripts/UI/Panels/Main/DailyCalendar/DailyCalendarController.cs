@@ -10,6 +10,7 @@ namespace UISample.UI
         {
             _view = uiContainer.GetView<DailyCalendarView>();
             _view.CloseButton.onClick.AddListener(ClosePressed);
+            _view.ShdowCloseButton.onClick.AddListener(ClosePressed);
         }
 
         public override void Show(bool instantly = false)

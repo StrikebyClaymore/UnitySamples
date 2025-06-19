@@ -7,7 +7,6 @@ namespace UISample.UI
     {
         [field: SerializeField] public Button CloseButton { get; private set; }
         [field: SerializeField] public Button ShadowCloseButton { get; private set; }
-        [field: SerializeField] public AudioSource AudioSource { get; private set; }
         
         [field: SerializeField] public Slider SoundSlider { get; private set; }
         [field: SerializeField] public Slider MusicSlider { get; private set; }

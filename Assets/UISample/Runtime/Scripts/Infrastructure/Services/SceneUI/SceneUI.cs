@@ -13,7 +13,7 @@ namespace UISample.Infrastructure
         protected readonly Stack<List<Type>> _previousControllersStack = new();
         public bool Initialized { get; private set; }
 
-        public virtual void Initialize()
+        public void Initialize()
         {
             Initialized = true;
         }

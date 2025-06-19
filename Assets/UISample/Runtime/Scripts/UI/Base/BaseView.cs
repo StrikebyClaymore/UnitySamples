@@ -1,4 +1,6 @@
 ﻿using BrunoMikoski.AnimationSequencer;
+using Plugins.ServiceLocator;
+using UISample.Infrastructure;
 using UnityEngine;
 
 namespace UISample.UI
@@ -18,7 +20,7 @@ namespace UISample.UI
             }
             _showSequencer?.Play();
         }
-        
+
         public virtual void Hide(bool instantly = false)
         {
             if (instantly)
@@ -30,6 +32,11 @@ namespace UISample.UI
                 _hideSequencer.Play(() => SetGameObjectActive(false));
             else
                 SetGameObjectActive(false);
+        }
+
+        public void PlaySound(AudioClip clip)
+        {
+            ServiceLocator.Get<AudioPlayer>().PlayUI(clip);
         }
 
         private void SetGameObjectActive(bool active)
