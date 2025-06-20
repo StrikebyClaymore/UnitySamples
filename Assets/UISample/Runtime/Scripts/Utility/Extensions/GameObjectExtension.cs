@@ -13,10 +13,5 @@ namespace UISample.Utility
         {
             gameObject.SetActive(false);
         }
-        
-        public static void SetVisible(this GameObject gameObject, bool visible)
-        {
-            gameObject.SetActive(visible);
-        }
     }
 }

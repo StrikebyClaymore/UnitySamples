@@ -11,7 +11,8 @@ namespace UISample.Infrastructure
         public readonly PlayerDataValue<string> Language;
         public readonly PlayerDataValue<int> Acorns;
         public readonly PlayerDataValue<int> Gems;
-        public readonly PlayerDataValue<bool> LastReward;
+        public readonly PlayerDataValue<int> LastRewardIndex;
+        public readonly PlayerDataValue<string> DailyCalendarRewards;
 
         public PlayerData(PlayerDataDefaultSettings defaultSettings)
         {
@@ -19,8 +20,10 @@ namespace UISample.Infrastructure
             MusicVolume = new PlayerDataValue<float>(Data, PlayerDataConstants.MusicVolume, defaultSettings.MusicVolume);
             UIVolume = new PlayerDataValue<float>(Data, PlayerDataConstants.UIVolume, defaultSettings.UIVolume);
             Language = new PlayerDataValue<string>(Data, PlayerDataConstants.Language, defaultSettings.Language);
-            Acorns = new PlayerDataValue<int>(Data, PlayerDataConstants.Acorns, 0);
-            Gems = new PlayerDataValue<int>(Data, PlayerDataConstants.Gems, 0);
+            Acorns = new PlayerDataValue<int>(Data, PlayerDataConstants.Acorns);
+            Gems = new PlayerDataValue<int>(Data, PlayerDataConstants.Gems);
+            LastRewardIndex = new PlayerDataValue<int>(Data, PlayerDataConstants.LastDailyCalendarRewardIndex);
+            DailyCalendarRewards = new PlayerDataValue<string>(Data, PlayerDataConstants.DailyCalendarRewards);
         }
 
         public void Initialize()
@@ -31,6 +34,8 @@ namespace UISample.Infrastructure
             Language.Initialize();
             Acorns.Initialize();
             Gems.Initialize();
+            LastRewardIndex.Initialize();
+            DailyCalendarRewards.Initialize();
         }
     }
 }

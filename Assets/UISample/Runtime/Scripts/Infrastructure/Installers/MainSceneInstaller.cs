@@ -45,7 +45,7 @@ namespace UISample.Infrastructure
             sceneUI.ClearControllers();
             sceneUI.RegisterController(typeof(MainMenuController), new MainMenuController(_uiContainer));
             sceneUI.RegisterController(typeof(SettingsController), new SettingsController(_uiContainer));
-            sceneUI.RegisterController(typeof(DailyCalendarController), new DailyCalendarController(_uiContainer));
+            sceneUI.RegisterController(typeof(DailyCalendarController), new DailyCalendarController(_uiContainer, _configsContainer));
             sceneUI.ShowController<MainMenuController>();
         }
     }

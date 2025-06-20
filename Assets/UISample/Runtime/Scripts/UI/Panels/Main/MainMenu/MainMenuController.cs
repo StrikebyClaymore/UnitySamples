@@ -25,7 +25,6 @@ namespace UISample.UI
             _view.DailyCalendarNotification.Hide();
             var dailyCalendar = ServiceLocator.GetLocal<DailyCalendarManager>();
             dailyCalendar.Timer.OnUpdate += UpdateCalendarTime;
-            dailyCalendar.Timer.OnComplete += UpdateCalendarNotification;
             _view.DailyCalendarButton.onClick.AddListener(DailyCalendarPressed);
         }
 
@@ -37,6 +36,11 @@ namespace UISample.UI
         public override void Hide(bool instantly = false)
         {
             _view.Hide(instantly);
+        }
+        
+        public void SetCalendarNotification(bool enable)
+        {
+            _view.DailyCalendarNotification.SetActive(enable);
         }
 
         private void PlayPressed()
@@ -63,11 +67,6 @@ namespace UISample.UI
         private void UpdateCalendarTime(TimeSpan time)
         {
             _view.DailyCalendarTimerText.SetText(time.ToHHMMSS());
-        }
-
-        private void UpdateCalendarNotification()
-        {
-            _view.DailyCalendarNotification.Show();
         }
         
         private void DailyCalendarPressed()

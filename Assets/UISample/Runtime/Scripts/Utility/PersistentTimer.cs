@@ -42,8 +42,10 @@ namespace UISample.Utility
             }
         }
         
-        public void Start()
+        public void Start(bool reset = false)
         {
+            if(reset)
+                DeleteEntry();
             if (PlayerPrefs.HasKey(_key))
             {
                 TimeSpan timePassed = DateTime.UtcNow - _savedTime;

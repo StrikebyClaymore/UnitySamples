@@ -8,5 +8,9 @@
         public const string Language = "Language";
         public const string Acorns = "Acorns";
         public const string Gems = "Gems";
+        
+        public const string TimerKey = "DailyCalendarTimer";
+        public const string DailyCalendarRewards = "DailyCalendarRewards";
+        public const string LastDailyCalendarRewardIndex = "LastDailyCalendarRewardIndex";
     }
 }
