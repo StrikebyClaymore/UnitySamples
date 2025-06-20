@@ -61,14 +61,12 @@ namespace UISample.Utility
                 PlayerPrefs.SetString(_key, _savedTime.ToString("o"));
                 PlayerPrefs.Save();
                 _enabled = true;
-                Debug.Log("Новый таймер запущен.");
             }
         }
 
         public void Stop()
         {
             _enabled = false;
-            Debug.Log("Таймер завершился.");
         }
 
         public void DeleteEntry()

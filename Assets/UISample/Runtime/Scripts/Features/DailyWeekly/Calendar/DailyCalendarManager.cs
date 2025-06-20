@@ -55,7 +55,7 @@ namespace UISample.Features
             ConsumeReward((ERewards)reward.Id, reward.Amount);
             reward.State = EDailyRewardState.Rewarded;
             _playerData.LastRewardIndex.Value++;
-            Save();
+            SaveData();
             _mainMenuController.SetCalendarNotification(false);
             _timer.Start(true);
         }
@@ -66,7 +66,7 @@ namespace UISample.Features
             if (string.IsNullOrEmpty(save))
             {
                 _rewards = _generator.GenerateRewards();
-                Save();
+                SaveData();
             }
             else
             {
@@ -75,7 +75,7 @@ namespace UISample.Features
             _dailyRewardController.InitializeSlots(_rewards);
         }
 
-        private void Save()
+        private void SaveData()
         {
             _playerData.DailyCalendarRewards.Value = JsonConvert.SerializeObject(_rewards);
         }
@@ -89,7 +89,7 @@ namespace UISample.Features
                 _playerData.LastRewardIndex.Value = index;
             }
             _rewards[index].State = EDailyRewardState.Unlocked;
-            Save();
+            SaveData();
             _dailyRewardController.UnlockSlot(index);
             _mainMenuController.SetCalendarNotification(true);
         }

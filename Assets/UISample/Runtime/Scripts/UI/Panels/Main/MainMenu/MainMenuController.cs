@@ -23,8 +23,10 @@ namespace UISample.UI
             UpdateAcorns(playerData.Acorns.Value);
             UpdateGems(playerData.Gems.Value);
             _view.DailyCalendarNotification.Hide();
+            _view.DailyQuestsNotification.Hide();
             var dailyCalendar = ServiceLocator.GetLocal<DailyCalendarManager>();
             dailyCalendar.Timer.OnUpdate += UpdateCalendarTime;
+            _view.DailyQuestsButton.onClick.AddListener(DailyQuestsPressed);
             _view.DailyCalendarButton.onClick.AddListener(DailyCalendarPressed);
         }
 
@@ -67,6 +69,11 @@ namespace UISample.UI
         private void UpdateCalendarTime(TimeSpan time)
         {
             _view.DailyCalendarTimerText.SetText(time.ToHHMMSS());
+        }
+        
+        private void DailyQuestsPressed()
+        {
+            _sceneUI.ShowController<DailyQuestController>();
         }
         
         private void DailyCalendarPressed()
