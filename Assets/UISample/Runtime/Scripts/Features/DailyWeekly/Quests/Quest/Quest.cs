@@ -19,6 +19,13 @@ namespace UISample.Features
             Subscribe();
         }
         
+        public override void Dispose()
+        {
+            OnProgressChanged = null;
+            OnQuestCompleted = null;
+            base.Dispose();
+        }
+        
         protected sealed override void Subscribe()
         {
             EventBus.OnAddQuestValue.AddListener(Update);
@@ -46,7 +53,7 @@ namespace UISample.Features
         {
             if(Config.Type != type || Config.Target != target)
                 return;
-            Model.Progress += value;
+            Model.Progress = Math.Min(Model.Progress + value, Config.TargetAmount);
             OnProgressChanged?.Invoke(this);
             TryComplete();
         }

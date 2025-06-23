@@ -32,17 +32,24 @@ namespace UISample.UI
 
         public override void Show(bool instantly = false)
         {
+            base.Show(instantly);
             _view.Show(instantly);
         }
 
         public override void Hide(bool instantly = false)
         {
+            base.Hide(instantly);
             _view.Hide(instantly);
         }
-        
+
         public void SetCalendarNotification(bool enable)
         {
             _view.DailyCalendarNotification.SetActive(enable);
+        }
+
+        public void SetQuestNotification(bool enable)
+        {
+            _view.DailyQuestsNotification.SetActive(enable);
         }
 
         private void PlayPressed()
@@ -50,32 +57,32 @@ namespace UISample.UI
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             sceneLoader.LoadSceneAsync(GameConstants.GameplaySceneIndex, LoadSceneMode.Single);
         }
-        
+
         private void SettingsPressed()
         {
             _sceneUI.ShowController<SettingsController>();
         }
-        
+
         private void UpdateAcorns(int value)
         {
             _view.AcornsText.text = value.ToString();
         }
-        
+
         private void UpdateGems(int value)
         {
             _view.GemsText.text = value.ToString();
         }
-        
+
         private void UpdateCalendarTime(TimeSpan time)
         {
             _view.DailyCalendarTimerText.SetText(time.ToHHMMSS());
         }
-        
+
         private void DailyQuestsPressed()
         {
             _sceneUI.ShowController<DailyQuestController>();
         }
-        
+
         private void DailyCalendarPressed()
         {
             _sceneUI.ShowController<DailyCalendarController>();

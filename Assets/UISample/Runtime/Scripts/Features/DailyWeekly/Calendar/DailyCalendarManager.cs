@@ -23,7 +23,7 @@ namespace UISample.Features
         public DailyCalendarManager(MainMenuConfigs configs)
         {
             _config = configs.DailyCalendarConfig;
-            _timer = new PersistentTimer(PlayerDataConstants.TimerKey, _config.TimerInterval);
+            _timer = new PersistentTimer(PlayerDataConstants.DailyCalendarTimerKey, TimeSpan.FromSeconds(_config.TimerInterval));
             _timer.OnComplete += CalendarTimerCompleted;
             _generator = new DailyRewardsGenerator(_config);
             _playerData = ServiceLocator.Get<PlayerData>();

@@ -43,7 +43,21 @@ MonoBehaviour:
         <RewardType>k__BackingField: 1
         <RewardAmount>k__BackingField: 2
     - Key: 1
-      Value: []
+      Value:
+      - <Id>k__BackingField: 3
+        <Category>k__BackingField: 1
+        <Type>k__BackingField: 1
+        <Target>k__BackingField: 1
+        <TargetAmount>k__BackingField: 5
+        <RewardType>k__BackingField: 1
+        <RewardAmount>k__BackingField: 2
     - Key: 2
-      Value: []
+      Value:
+      - <Id>k__BackingField: 4
+        <Category>k__BackingField: 2
+        <Type>k__BackingField: 0
+        <Target>k__BackingField: 0
+        <TargetAmount>k__BackingField: 999
+        <RewardType>k__BackingField: 1
+        <RewardAmount>k__BackingField: 10
   <QuestSlotPrefab>k__BackingField: {fileID: 40755204426255981, guid: 87e85cacf88867547b1900f14f77b79e, type: 3}

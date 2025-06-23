@@ -46,6 +46,7 @@ namespace UISample.Infrastructure
         {
             var dailyQuestsManager = new DailyQuestsManager(_configsContainer);
             ServiceLocator.Register<DailyQuestsManager>(dailyQuestsManager);
+            ServiceLocator.Get<ApplicationLoop>().AddUpdatable(dailyQuestsManager);
         }
 
         private void InstallSceneLoading()

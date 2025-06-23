@@ -30,5 +30,19 @@ namespace UISample.Features
             }
             return quests;
         }
+
+        public List<Quest> CreateQuestsForCategory(EQuestCategory category)
+        {
+            var quests = new List<Quest>();
+            if (!_config.Quests.TryGetValue(category, out var questDataList))
+                return quests;
+            for (int i = 0; i < questDataList.Count; i++)
+            {
+                var questData = questDataList[i];
+                var questModel = new QuestModel(questData.Id, EQuestState.Process, 0);
+                quests.Add(new Quest(questData, questModel, i));
+            }
+            return quests;
+        }
     }
 }

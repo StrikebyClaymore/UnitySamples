@@ -10,6 +10,7 @@ namespace UISample.Infrastructure
 
         public virtual void Dispose()
         {
+            OnUpdated = null;
             OnCompleted = null;
             IsCompleted = false;
             Unsubscribe();
@@ -45,6 +46,12 @@ namespace UISample.Infrastructure
         {
             Target = target;
             Progress = progress;
+        }
+        
+        public override void Dispose()
+        {
+            OnProgressChanged = null;
+            base.Dispose();
         }
         
         protected override void Update()

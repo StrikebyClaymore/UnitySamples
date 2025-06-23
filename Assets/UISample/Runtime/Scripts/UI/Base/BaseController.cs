@@ -7,6 +7,7 @@ namespace UISample.UI
     public abstract class BaseController : IDisposable
     {
         protected SceneUI _sceneUI;
+        public bool Active { get; private set; }
 
         protected BaseController()
         {
@@ -15,12 +16,12 @@ namespace UISample.UI
         
         public virtual void Show(bool instantly = false)
         {
-            
+            Active = true;
         }
 
         public virtual void Hide(bool instantly = false)
         {
-            
+            Active = false;
         }
 
         public virtual void Dispose()

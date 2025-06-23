@@ -15,6 +15,7 @@ namespace UISample.UI
         private readonly DailyQuestsManager _questsManager;
         private readonly MonoPool<QuestSlot> _slotsPool;
         private readonly List<QuestSlot> _slots = new();
+        private MainMenuController _mainMenuController;
         private Dictionary<EQuestCategory, List<Quest>> _quests;
         private EQuestCategory _selectedCategory;
 
@@ -24,6 +25,7 @@ namespace UISample.UI
             _config = configs.DailyQuestsConfig;
             _questsManager = ServiceLocator.Get<DailyQuestsManager>();
             _slotsPool = new MonoPool<QuestSlot>(_config.QuestSlotPrefab, 1, new GameObject("Quests Pool").transform, true);
+            _mainMenuController = _sceneUI.GetController<MainMenuController>();
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _view.ShadowCloseButton.onClick.AddListener(ClosePressed);
             foreach (var pair in _view.Categories)
@@ -36,12 +38,14 @@ namespace UISample.UI
 
         public override void Show(bool instantly = false)
         {
+            base.Show(instantly);
             _view.Show(instantly);
             DrawCategory(_selectedCategory);
         }
 
         public override void Hide(bool instantly = false)
         {
+            base.Hide(instantly);
             _view.Hide(instantly);
         }
 
@@ -108,6 +112,7 @@ namespace UISample.UI
             if (quest.Config.Category != _selectedCategory)
                 return;
             _slots[quest.Index].SetState(EQuestState.Completed);
+            _mainMenuController.SetQuestNotification(true);
         }
     }
 }

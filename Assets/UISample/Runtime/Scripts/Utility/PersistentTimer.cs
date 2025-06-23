@@ -8,51 +8,68 @@ namespace UISample.Utility
     public class PersistentTimer : IUpdate
     {
         private readonly string _key;
-        private readonly float _duration;
+        private readonly TimeSpan _duration;
         private DateTime _savedTime;
         private bool _enabled;
+
         public event Action<TimeSpan> OnUpdate;
         public event Action OnComplete;
 
-        public PersistentTimer(string key, float time)
+        public PersistentTimer(string key, TimeSpan duration)
         {
             _key = key;
-            _duration = time;
+            _duration = duration;
+
             if (PlayerPrefs.HasKey(_key))
-                _savedTime = DateTime.ParseExact(PlayerPrefs.GetString(_key), "o", CultureInfo.InvariantCulture,
-                    DateTimeStyles.AdjustToUniversal);
+            {
+                _savedTime = DateTime.ParseExact(
+                    PlayerPrefs.GetString(_key),
+                    "o",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AdjustToUniversal
+                );
+            }
         }
 
         public void CustomUpdate()
         {
-            if(!_enabled)
+            if (!_enabled)
                 return;
+
             if (PlayerPrefs.HasKey(_key))
             {
                 TimeSpan timePassed = DateTime.UtcNow - _savedTime;
-                TimeSpan remaining = TimeSpan.FromSeconds(_duration) - timePassed;
+                TimeSpan remaining = _duration - timePassed;
+
                 if (remaining.TotalSeconds < 0)
                     remaining = TimeSpan.Zero;
+
                 OnUpdate?.Invoke(remaining);
-                if (timePassed.TotalSeconds >= _duration)
+
+                if (timePassed >= _duration)
                 {
                     Stop();
                     OnComplete?.Invoke();
                 }
             }
         }
-        
+
         public void Start(bool reset = false)
         {
-            if(reset)
+            if (reset)
                 DeleteEntry();
+
             if (PlayerPrefs.HasKey(_key))
             {
                 TimeSpan timePassed = DateTime.UtcNow - _savedTime;
-                if (timePassed.TotalSeconds >= _duration)
+                if (timePassed >= _duration)
                 {
                     Stop();
                     OnComplete?.Invoke();
+                }
+                else
+                {
+                    _enabled = true;
                 }
             }
             else

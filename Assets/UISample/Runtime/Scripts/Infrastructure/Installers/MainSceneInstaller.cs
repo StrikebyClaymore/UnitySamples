@@ -1,5 +1,4 @@
-﻿using NaughtyAttributes;
-using Plugins.ServiceLocator;
+﻿using Plugins.ServiceLocator;
 using UISample.Features;
 using UISample.UI;
 using UnityEngine;

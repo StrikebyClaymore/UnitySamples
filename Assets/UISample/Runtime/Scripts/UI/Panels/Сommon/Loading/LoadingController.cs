@@ -17,11 +17,13 @@ namespace UISample.UI
 
         public override void Show(bool instantly = false)
         {
+            base.Show(instantly);
             _view.Show(instantly);
         }
 
         public override void Hide(bool instantly = false)
         {
+            base.Hide(instantly);
             _view.Hide(instantly);
         }
 
