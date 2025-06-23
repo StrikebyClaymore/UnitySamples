@@ -25,6 +25,7 @@ namespace UISample.Features
                     _playerData.Acorns.Value++;
                     _gameplayData.Acorns.Value++;
                     _acornsPool.Release(acorn);
+                    EventBus.OnAddQuestValue.Invoke(EQuestType.Collect, EQuestTarget.Acorns, 1);
                     break;
             }
         }

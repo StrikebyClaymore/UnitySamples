@@ -36,6 +36,7 @@ namespace UISample.Infrastructure
             ServiceLocator.Get<GameplayData>().ResetData();
             ServiceLocator.GetLocal<MapGenerator>().Initialize();
             _playerInstaller.Install();
+            EventBus.OnAddQuestValue.Invoke(EQuestType.Play, EQuestTarget.Times, 1);
             Initialized = true;
         }
 

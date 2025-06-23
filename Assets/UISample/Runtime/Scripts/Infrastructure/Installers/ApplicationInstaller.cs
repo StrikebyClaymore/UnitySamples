@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Plugins.ServiceLocator;
 using UISample.Data;
+using UISample.Features;
 using UISample.UI;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ namespace UISample.Infrastructure
             InstallAudioSettings();
             InstallAudioPlayer();
             InstallSceneUI();
+            InstallQuestsManager();
         }
 
         public void Initialize()
@@ -38,6 +40,12 @@ namespace UISample.Infrastructure
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             yield return sceneLoader.LoadSceneAsync(GameConstants.MainMenuSceneIndex);
             sceneLoader.UnloadSceneAsync(GameConstants.LoadingSceneIndex);
+        }
+        
+        private void InstallQuestsManager()
+        {
+            var dailyQuestsManager = new DailyQuestsManager(_configsContainer);
+            ServiceLocator.Register<DailyQuestsManager>(dailyQuestsManager);
         }
 
         private void InstallSceneLoading()

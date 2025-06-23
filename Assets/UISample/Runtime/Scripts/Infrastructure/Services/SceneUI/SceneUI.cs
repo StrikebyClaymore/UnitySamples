@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UISample.Infrastructure
 {
-    public class SceneUI : IService, IInitializable
+    public class SceneUI : IService, IInitializable, IDisposable
     {
         protected readonly Dictionary<Type, BaseController> _controllers = new();
         protected readonly Dictionary<Type, BaseController> _showedControllers = new();
@@ -26,6 +26,7 @@ namespace UISample.Infrastructure
 
         public void ClearControllers()
         {
+            Dispose();
             _controllers.Clear();
             _showedControllers.Clear();
             _previousControllersStack.Clear();
@@ -94,6 +95,14 @@ namespace UISample.Infrastructure
         public void ClearControllersStack()
         {
             _previousControllersStack.Clear();
+        }
+        
+        public void Dispose()
+        {
+            foreach (var controller in _controllers.Values)
+            {
+                controller.Dispose();
+            }
         }
         
         private bool ShowController(Type type)

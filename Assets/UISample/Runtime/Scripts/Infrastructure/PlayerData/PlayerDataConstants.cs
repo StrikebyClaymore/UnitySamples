@@ -12,5 +12,6 @@
         public const string TimerKey = "DailyCalendarTimer";
         public const string DailyCalendarRewards = "DailyCalendarRewards";
         public const string LastDailyCalendarRewardIndex = "LastDailyCalendarRewardIndex";
+        public const string DailyQuests = "DailyQuests";
     }
 }

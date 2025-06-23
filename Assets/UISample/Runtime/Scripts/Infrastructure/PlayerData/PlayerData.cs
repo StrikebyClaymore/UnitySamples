@@ -13,6 +13,7 @@ namespace UISample.Infrastructure
         public readonly PlayerDataValue<int> Gems;
         public readonly PlayerDataValue<int> LastRewardIndex;
         public readonly PlayerDataValue<string> DailyCalendarRewards;
+        public readonly PlayerDataValue<string> DailyQuests;
 
         public PlayerData(PlayerDataDefaultSettings defaultSettings)
         {
@@ -24,6 +25,7 @@ namespace UISample.Infrastructure
             Gems = new PlayerDataValue<int>(Data, PlayerDataConstants.Gems);
             LastRewardIndex = new PlayerDataValue<int>(Data, PlayerDataConstants.LastDailyCalendarRewardIndex);
             DailyCalendarRewards = new PlayerDataValue<string>(Data, PlayerDataConstants.DailyCalendarRewards);
+            DailyQuests = new PlayerDataValue<string>(Data, PlayerDataConstants.DailyQuests);
         }
 
         public void Initialize()
@@ -36,6 +38,7 @@ namespace UISample.Infrastructure
             Gems.Initialize();
             LastRewardIndex.Initialize();
             DailyCalendarRewards.Initialize();
+            DailyQuests.Initialize();
         }
     }
 }

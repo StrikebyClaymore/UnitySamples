@@ -38,6 +38,7 @@ namespace Pool
 
         public void Release(T obj)
         {
+            obj.transform.SetParent(_parent);
             obj.gameObject.SetActive(false);
         }
 
@@ -47,6 +48,12 @@ namespace Pool
             obj.gameObject.SetActive(false);
             _objects.Add(obj);
             return obj;
+        }
+
+        public void Dispose()
+        {
+           _objects.Clear();
+           GameObject.Destroy(_parent.gameObject);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UISample.Features;
+using UISample.UI;
+using UISample.Utility;
 using UnityEngine;
 
 namespace UISample.Data
@@ -9,26 +10,46 @@ namespace UISample.Data
     public class DailyQuestsConfig : ScriptableObject
     {
         [field: SerializeField] public List<QuestReward> Rewards { get; private set; }
-        [field: SerializeField] public List<QuestData> Quests { get; private set; }
+        [field: SerializeField] public PairCollection<EQuestCategory, List<QuestData>> Quests { get; private set; }
+        [field: SerializeField] public QuestSlot QuestSlotPrefab { get; private set; }
 
         public QuestData GetQuestData(int id)
         {
-            foreach (var quest in Quests)
+            foreach (var pair in Quests)
             {
-                if (quest.Id == id)
-                    return quest;
+                foreach (var quest in pair.Value)
+                {
+                    if (quest.Id == id)
+                        return quest;
+                }
             }
-
+            
+            return null;
+        }
+        
+        public Sprite GetRewardIcon(ERewards reward)
+        {
+            foreach (var pair in Rewards)
+            {
+                if (reward == pair.Type)
+                    return pair.Icon;
+            }
+            
             return null;
         }
         
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            for (int i = 0; i < Quests.Count; i++)
+            var index = 0;
+            foreach (var pair in Quests)
             {
-                var quest = Quests[i];
-                quest.SetData(i, Rewards.FirstOrDefault(x => x.Type == quest.RewardType).Icon);
+                var category = pair.Key;
+                foreach (var quest in pair.Value)
+                {
+                    quest.SetData(index, category);
+                    index++;
+                }
             }
         }
 #endif

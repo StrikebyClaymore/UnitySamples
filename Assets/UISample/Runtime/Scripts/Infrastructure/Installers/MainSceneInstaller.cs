@@ -1,4 +1,5 @@
-﻿using Plugins.ServiceLocator;
+﻿using NaughtyAttributes;
+using Plugins.ServiceLocator;
 using UISample.Features;
 using UISample.UI;
 using UnityEngine;
@@ -24,6 +25,16 @@ namespace UISample.Infrastructure
             InstallSceneUI();
         }
 
+        public void Initialize()
+        {
+            var audioPlayer = ServiceLocator.Get<AudioPlayer>();
+            audioPlayer.PlayMusic(audioPlayer.Config.MainMusicClip);
+            ServiceLocator.GetLocal<DailyCalendarManager>().Initialize();
+            ServiceLocator.Get<DailyQuestsManager>().Initialize();
+            PlayerPrefs.Save();
+            Initialized = true;
+        }
+
         private void InstallDailyCalendar()
         {
             var dailyCalendar = new DailyCalendarManager(_configsContainer);
@@ -31,14 +42,6 @@ namespace UISample.Infrastructure
             ServiceLocator.Get<ApplicationLoop>().AddUpdatable(dailyCalendar);
         }
 
-        public void Initialize()
-        {
-            var audioPlayer = ServiceLocator.Get<AudioPlayer>();
-            audioPlayer.PlayMusic(audioPlayer.Config.MainMusicClip);
-            ServiceLocator.GetLocal<DailyCalendarManager>().Initialize();
-            Initialized = true;
-        }
-        
         private void InstallSceneUI()
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();

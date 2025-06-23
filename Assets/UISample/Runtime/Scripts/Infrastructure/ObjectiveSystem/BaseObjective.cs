@@ -2,15 +2,16 @@
 
 namespace UISample.Infrastructure
 {
-    public abstract class BaseObjective : IDisposable
+    public abstract class BaseObjective : IObjective
     {
-        public bool Completed { get; private set; }
-        public event Action OnComplete;
+        public bool IsCompleted { get; protected set; }
+        public event Action OnUpdated;
+        public event Action OnCompleted;
 
         public virtual void Dispose()
         {
-            OnComplete = null;
-            Completed = false;
+            OnCompleted = null;
+            IsCompleted = false;
             Unsubscribe();
         }
 
@@ -20,10 +21,36 @@ namespace UISample.Infrastructure
 
         protected abstract void TryComplete();
         
-        protected void Complete()
+        protected virtual void Update()
         {
-            Completed = true;
-            OnComplete?.Invoke();
+            OnUpdated?.Invoke();
+            TryComplete();
+        }
+        
+        protected virtual void Complete()
+        {
+            IsCompleted = true;
+            OnCompleted?.Invoke();
+            Unsubscribe();
+        }
+    }
+    
+    public abstract class BaseObjective<T> : BaseObjective, IObjective<T> where T : struct
+    {
+        public T Target { get; }
+        public T Progress { get; protected set; }
+        public event Action<T> OnProgressChanged;
+
+        protected BaseObjective(T target, T progress = default)
+        {
+            Target = target;
+            Progress = progress;
+        }
+        
+        protected override void Update()
+        {
+            OnProgressChanged?.Invoke(Progress);
+            base.Update();
         }
     }
 }

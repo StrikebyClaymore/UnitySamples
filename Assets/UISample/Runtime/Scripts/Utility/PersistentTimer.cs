@@ -59,7 +59,6 @@ namespace UISample.Utility
             {
                 _savedTime = DateTime.UtcNow;
                 PlayerPrefs.SetString(_key, _savedTime.ToString("o"));
-                PlayerPrefs.Save();
                 _enabled = true;
             }
         }
@@ -72,7 +71,6 @@ namespace UISample.Utility
         public void DeleteEntry()
         {
             PlayerPrefs.DeleteKey(_key);
-            PlayerPrefs.Save();
         }
     }
 }

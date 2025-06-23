@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Plugins.ServiceLocator;
 using Pool;
 using UISample.Data;
 using UISample.Infrastructure;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = UnityEngine.Random;
 
 namespace UISample.Features
 {
-    public class MapGenerator : ILocalService, IInitializable, IUpdate
+    public class MapGenerator : ILocalService, IInitializable, IUpdate, IDisposable
     {
         private const int TreeSize = 5;
         private readonly MapGeneratorConfig _config;
@@ -31,7 +33,7 @@ namespace UISample.Features
         {
             _config = configs.MapGeneratorConfig;
             _tilemap = tilemap;
-            AcornsPool = new MonoPool<Acorn>(_config.AcornPrefab, 2, new GameObject("Acorns Pool").transform);
+            AcornsPool = new MonoPool<Acorn>(_config.AcornPrefab, 2, new GameObject("Acorns Pool").transform, true);
             _currentTreeX = 0;
         }
 
@@ -79,6 +81,11 @@ namespace UISample.Features
         public Vector3 MapToWorld(Vector3Int position)
         {
             return _tilemap.CellToWorld(position) + _tilemap.cellSize / 2;
+        }
+        
+        public void Dispose()
+        {
+            AcornsPool?.Dispose();
         }
         
         private void ResetGame()

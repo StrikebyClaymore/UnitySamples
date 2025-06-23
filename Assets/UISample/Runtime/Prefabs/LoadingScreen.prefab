@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <AudioConfig>k__BackingField: {fileID: 11400000, guid: 54cb8e1f59618344eae6971849729594, type: 2}
+  <DailyQuestsConfig>k__BackingField: {fileID: 11400000, guid: c848e1b67d21c9c448f2662960c4a447, type: 2}
 --- !u!1 &1164081028536630635
 GameObject:
   m_ObjectHideFlags: 0

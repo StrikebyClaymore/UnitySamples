@@ -1,6 +1,8 @@
-﻿namespace Pool
+﻿using System;
+
+namespace Pool
 {
-    public interface IPool
+    public interface IPool : IDisposable
     {
         
     }

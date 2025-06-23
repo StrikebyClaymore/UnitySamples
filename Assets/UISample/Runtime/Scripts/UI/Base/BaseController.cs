@@ -1,9 +1,10 @@
+using System;
 using Plugins.ServiceLocator;
 using UISample.Infrastructure;
 
 namespace UISample.UI
 {
-    public abstract class BaseController
+    public abstract class BaseController : IDisposable
     {
         protected SceneUI _sceneUI;
 
@@ -18,6 +19,11 @@ namespace UISample.UI
         }
 
         public virtual void Hide(bool instantly = false)
+        {
+            
+        }
+
+        public virtual void Dispose()
         {
             
         }

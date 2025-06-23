@@ -40,5 +40,10 @@ namespace Pool
             _objects.Add(obj);
             return obj;
         }
+
+        public void Dispose()
+        {
+            _objects.Clear();
+        }
     }
 }
