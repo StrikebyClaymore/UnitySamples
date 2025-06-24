@@ -16,6 +16,10 @@ namespace UISample.UI
         {
             _view = uiContainer.GetView<MainMenuView>();
             _view.PlayButton.onClick.AddListener(PlayPressed);
+            _view.PersonalButton.onClick.AddListener(PersonalPressed);
+            _view.SkinsButton.onClick.AddListener(SkinsPressed);
+            _view.ShopButton.onClick.AddListener(ShopPressed);
+            _view.LeaderboardButton.onClick.AddListener(LeaderboardPressed);
             _view.SettingsButton.onClick.AddListener(SettingsPressed);
             var playerData = ServiceLocator.Get<PlayerData>();
             playerData.Acorns.OnValueChanged += UpdateAcorns;
@@ -58,6 +62,26 @@ namespace UISample.UI
             sceneLoader.LoadSceneAsync(GameConstants.GameplaySceneIndex, LoadSceneMode.Single);
         }
 
+        private void PersonalPressed()
+        {
+            _sceneUI.ShowController<PersonalController>();
+        }
+
+        private void SkinsPressed()
+        {
+            _sceneUI.ShowController<SkinsController>();
+        }
+
+        private void ShopPressed()
+        {
+            _sceneUI.ShowController<ShopController>();
+        }
+
+        private void LeaderboardPressed()
+        {
+            _sceneUI.ShowController<LeaderboardController>();
+        }
+        
         private void SettingsPressed()
         {
             _sceneUI.ShowController<SettingsController>();
