@@ -8,6 +8,7 @@ namespace UISample.Features
 {
     public class PlayerMovement : IUpdate
     {
+        private readonly PlayerView _view;
         private readonly Transform _transform;
         private readonly MapGenerator _mapGenerator;
         private readonly float _moveInTreeDuration = 0.3f;
@@ -21,7 +22,8 @@ namespace UISample.Features
         
         public PlayerMovement(PlayerView view, MapGenerator mapGenerator)
         {
-            _transform = view.transform;
+            _view = view;
+            _transform = _view.transform;
             _mapGenerator = mapGenerator;
             _currentTree = _mapGenerator.Trees[1];
             _currentNode = _mapGenerator.PlayerSpawnNode;
@@ -68,8 +70,10 @@ namespace UISample.Features
             if(_direction != Vector3Int.zero)
                 return;
             _direction = direction;
+            if(CanMoveInTree())
+                _view.Flip(_direction);
         }
-        
+
         private void HandleControlReleased(Vector3Int direction)
         {
             if(direction != _direction)
@@ -95,17 +99,36 @@ namespace UISample.Features
             {
                 foreach (var tree in _mapGenerator.Trees)
                 {
-                    if(tree == _currentTree)
+                    if (tree == _currentTree || (_mapGenerator.MoveDirection != 0 && (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection))
                         continue;
                     foreach (var node in tree.Nodes)
                     {
-                        if (node.Type is EMapNodeType.Leaves &&
-                            Mathf.Abs(_currentNode.Position.x - node.Position.x) +
-                            Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
+                        if (node.Type is not EMapNodeType.Leaves)
+                            continue;
+                        var distance = node.Position - _currentNode.Position;
+                        if(Mathf.Abs(distance.x) != 2)
+                            continue;
+                        if (_direction.x != 0)
                         {
+                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
                             _currentTree = tree;
                             _currentNode = node;
-                            _mapGenerator.SetDirection(_direction.x);
+                            return;
+                        }
+                        if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
+                            continue;
+                        if (_direction.y == 1 && distance.y > 0)
+                        {
+                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
+                            _currentTree = tree;
+                            _currentNode = node;
+                            return;
+                        }
+                        if (_direction.y == -1 && distance.y < 0)
+                        {
+                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
+                            _currentTree = tree;
+                            _currentNode = node;
                             return;
                         }
                     }
@@ -127,22 +150,27 @@ namespace UISample.Features
 
         private bool CanMoveBetweenTree()
         {
-            if (_mapGenerator.MoveDirection != 0 && _direction.x != _mapGenerator.MoveDirection)
-                return false;
             if (_currentNode.Type is EMapNodeType.Leaves)
             {
                 foreach (var tree in _mapGenerator.Trees)
                 {
-                    if (tree == _currentTree)
+                    if (tree == _currentTree || (_mapGenerator.MoveDirection != 0 && (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection))
                         continue;
                     foreach (var node in tree.Nodes)
                     {
-                        if (node.Type is EMapNodeType.Leaves &&
-                            Mathf.Abs(_currentNode.Position.x - node.Position.x) +
-                            Mathf.Abs(_currentNode.Position.y - node.Position.y) < 6)
-                        {
+                        if (node.Type is not EMapNodeType.Leaves)
+                            continue;
+                        var distance = node.Position - _currentNode.Position;
+                        if(Mathf.Abs(distance.x) != 2)
+                            continue;
+                        if (_direction.x != 0)
                             return true;
-                        }
+                        if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
+                            continue;
+                        if (_direction.y == 1 && distance.y > 0)
+                            return true;
+                        if (_direction.y == -1 && distance.y < 0)
+                            return true;
                     }
                 }
             }

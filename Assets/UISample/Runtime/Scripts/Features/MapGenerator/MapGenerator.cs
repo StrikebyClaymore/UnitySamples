@@ -233,7 +233,7 @@ namespace UISample.Features
 
         private void CreateHollowTree(int startX)
         {
-            var tree = new MapTree(0);
+            var tree = new MapTree(startX);
             if(MoveDirection is 0 or 1)
                 _trees.Add(tree);
             else
