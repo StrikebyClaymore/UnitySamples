@@ -43,6 +43,14 @@ namespace UISample.UI
             base.Hide(instantly);
             _view.Hide(instantly);
         }
+        
+        public override void Dispose()
+        {
+            base.Dispose();
+            _audioSettings.OnSoundVolumeChanged.RemoveListener(SoundVolumeChanged);
+            _audioSettings.OnMusicVolumeChanged.RemoveListener(MusicVolumeChanged);
+            _audioSettings.OnUIVolumeChanged.RemoveListener(UIVolumeChanged);
+        }
 
         private void ClosePressed()
         {

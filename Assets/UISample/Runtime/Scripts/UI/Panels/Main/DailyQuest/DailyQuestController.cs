@@ -92,6 +92,7 @@ namespace UISample.UI
                 var slot = _slotsPool.Get();
                 slot.Initialize(quest, _config.GetRewardIcon(quest.Config.RewardType), i, SlotRewardPressed);
                 slot.transform.SetParent(_view.QuestContainer);
+                slot.transform.localScale = Vector3.one;
                 _slots.Add(slot);
             }
         }
@@ -102,7 +103,6 @@ namespace UISample.UI
             var quest = _quests[_selectedCategory][index];
             if (quest.Model.State is not EQuestState.Completed)
                 return;
-            Debug.Log(quest.IsCompleted);
             slot.SetState(EQuestState.Rewarded);
             _questsManager.ClaimReward(quest);
         }

@@ -60,4 +60,4 @@ MonoBehaviour:
         <TargetAmount>k__BackingField: 999
         <RewardType>k__BackingField: 1
         <RewardAmount>k__BackingField: 10
-  <QuestSlotPrefab>k__BackingField: {fileID: 40755204426255981, guid: 87e85cacf88867547b1900f14f77b79e, type: 3}
+  <QuestSlotPrefab>k__BackingField: {fileID: 7424985741262433590, guid: 87e85cacf88867547b1900f14f77b79e, type: 3}

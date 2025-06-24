@@ -59,6 +59,7 @@ namespace UISample.UI
         
         private void Process()
         {
+            _rewardAmountText.SetActive(true);
             _fillImage.color = _defaultColor;
             _rewardImage.color = _defaultColor;
             _rewardedImage.SetActive(false);
@@ -66,6 +67,7 @@ namespace UISample.UI
         
         private void Complete()
         {
+            _rewardAmountText.SetActive(true);
             _fillImage.color = _completedColor;
             _rewardImage.color = _completedColor;
             _rewardedImage.SetActive(false);

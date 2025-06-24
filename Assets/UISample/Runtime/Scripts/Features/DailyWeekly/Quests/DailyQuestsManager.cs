@@ -32,7 +32,7 @@ namespace UISample.Features
             _config = configs.DailyQuestsConfig;
             _generator = new QuestsGenerator(_config);
             _playerData = ServiceLocator.Get<PlayerData>();
-            _dailyTimer = new PersistentTimer(PlayerDataConstants.DailyQuestTimerKey, TimeSpan.FromSeconds(5));
+            _dailyTimer = new PersistentTimer(PlayerDataConstants.DailyQuestTimerKey, TimeSpan.FromDays(1));
             _weeklyTimer = new PersistentTimer(PlayerDataConstants.WeeklyQuestTimerKey, TimeSpan.FromDays(7));
             LoadOrCreateData();
             _dailyTimer.OnComplete += ResetDailyQuests;
@@ -102,7 +102,7 @@ namespace UISample.Features
             {
                 if (quest.Model.State is EQuestState.Completed)
                     _waitClaimQuests.Add(quest);
-                else
+                else if(quest.Model.State is EQuestState.Process)
                     quest.OnQuestCompleted += QuestCompleted;
             }
         }
