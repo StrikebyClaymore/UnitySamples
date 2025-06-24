@@ -104,6 +104,8 @@ namespace UISample.Features
                     _waitClaimQuests.Add(quest);
                 else if(quest.Model.State is EQuestState.Process)
                     quest.OnQuestCompleted += QuestCompleted;
+                else
+                    quest.Dispose();
             }
         }
 
