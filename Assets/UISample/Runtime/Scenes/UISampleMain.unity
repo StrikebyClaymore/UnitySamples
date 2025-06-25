@@ -460,10 +460,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RootCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3007481140083405878, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4239422251178457416, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -550,14 +546,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6847741055829775104, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8137967007181754447, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901134782113530938, guid: 9882ccb3afd377f47a9211239af90d3f, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
