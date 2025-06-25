@@ -413,6 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cameraFollow: {fileID: 1816166101}
   _playerPrefab: {fileID: 817500186482017702, guid: 6f7e6c35bb2cd084d99cdb42565903df, type: 3}
+  _playerConfig: {fileID: 11400000, guid: 53860fe1436338d42ad22f3167e2a075, type: 2}
 --- !u!114 &1852212205
 MonoBehaviour:
   m_ObjectHideFlags: 0

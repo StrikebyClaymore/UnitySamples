@@ -70,17 +70,26 @@ namespace UISample.Features
         {
             foreach (var transform in layer.Transforms)
                 transform.position += new Vector3(delta.x * layer.Speed, 0f, 0f);
+
             float viewCenterX = _target.position.x;
             float halfSpan = _backgroundWidth * layer.Transforms.Length / 2f;
+            
+            float maxX = float.MinValue;
+            float minX = float.MaxValue;
+            foreach (var transform in layer.Transforms)
+            {
+                float x = transform.position.x;
+                if (x > maxX) maxX = x;
+                if (x < minX) minX = x;
+            }
             foreach (var transform in layer.Transforms)
             {
                 float distance = viewCenterX - transform.position.x;
                 if (Mathf.Abs(distance) > halfSpan)
                 {
                     float direction = Mathf.Sign(distance);
-                    float extremeX = direction > 0
-                        ? layer.Transforms.Max(tr => tr.position.x)
-                        : layer.Transforms.Min(tr => tr.position.x);
+                    float extremeX = direction > 0 ? maxX : minX;
+
                     transform.position = new Vector3(
                         extremeX + direction * _backgroundWidth,
                         transform.position.y,
@@ -89,5 +98,6 @@ namespace UISample.Features
                 }
             }
         }
+
     }
 }

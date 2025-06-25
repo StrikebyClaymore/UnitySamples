@@ -9,11 +9,13 @@ namespace UISample.Features
         private readonly PlayerData _playerData;
         private readonly GameplayData _gameplayData;
         private readonly MonoPool<Acorn> _acornsPool;
+        private readonly AudioPlayer _audioPlayer;
         
         public PickupHandler(MapGenerator mapGenerator)
         {
             _playerData = ServiceLocator.Get<PlayerData>();
             _gameplayData = ServiceLocator.Get<GameplayData>();
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
             _acornsPool = mapGenerator.AcornsPool;
         }
         
@@ -28,6 +30,8 @@ namespace UISample.Features
                     EventBus.OnAddQuestValue.Invoke(EQuestType.Collect, EQuestTarget.Acorns, 1);
                     break;
             }
+
+            _audioPlayer.PlaySound(_audioPlayer.Config.ItemPickupClip);
         }
     }
 }

@@ -17,4 +17,8 @@ MonoBehaviour:
   <DefaultMusicVolume>k__BackingField: 0.5
   <DefaultUIVolume>k__BackingField: 0.5
   <MainMusicClip>k__BackingField: {fileID: 8300000, guid: f7c56ae2a0bfad0499f226c72eb608a8, type: 3}
-  <TestClip>k__BackingField: {fileID: 8300000, guid: f10e7ff812627164fa39911459400577, type: 3}
+  <UIOpenClip>k__BackingField: {fileID: 8300000, guid: a31bd0e81b5102e44b8759b9a0eb3311, type: 3}
+  <UICloseClip>k__BackingField: {fileID: 8300000, guid: b636a8a60643f3943ab6da10e417e4f9, type: 3}
+  <UISelectClip>k__BackingField: {fileID: 8300000, guid: 6a4753fabc7cf0944b834590b7c0d5af, type: 3}
+  <UIPickupClip>k__BackingField: {fileID: 8300000, guid: 20b0ebee59ac129459af0b3990e8f54d, type: 3}
+  <ItemPickupClip>k__BackingField: {fileID: 8300000, guid: 3dbb4f6cc4700224698a307c6d40be51, type: 3}

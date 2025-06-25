@@ -1576,7 +1576,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 6582881591768073014}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -1701,7 +1701,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 6582881591768073014}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -2114,7 +2114,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 7783680254352054135}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -2225,7 +2225,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 7783680254352054135}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -3276,7 +3276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5686,7 +5686,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 7744208610608106850}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -5811,7 +5811,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 7744208610608106850}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -7204,7 +7204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8591,7 +8591,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 469156193413288243}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -8702,7 +8702,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 469156193413288243}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -9005,7 +9005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9421,7 +9421,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 4326025731036227535}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -9532,7 +9532,7 @@ MonoBehaviour:
         callback:
           m_PersistentCalls:
             m_Calls:
-            - m_Target: {fileID: 0}
+            - m_Target: {fileID: 4326025731036227535}
               m_TargetAssemblyTypeName: UISample.UI.BaseView, UISample
               m_MethodName: PlaySound
               m_Mode: 2
@@ -10974,7 +10974,7 @@ PrefabInstance:
     - target: {fileID: 3893594476955696692, guid: 5a7ab4ebf5114db4998b673b553981f6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4510759682156403089, guid: aa690ae72e998f54b8c8b099d2165bab, type: 3}
+      objectReference: {fileID: 21300000, guid: aa690ae72e998f54b8c8b099d2165bab, type: 3}
     - target: {fileID: 3893594476955696692, guid: 5a7ab4ebf5114db4998b673b553981f6, type: 3}
       propertyPath: m_Color.b
       value: 1

@@ -9,6 +9,8 @@ namespace UISample.Features
     public class PlayerMovement : IUpdate
     {
         private readonly PlayerView _view;
+        private readonly PlayerConfig _config;
+        private readonly AudioPlayer _audioPlayer;
         private readonly Transform _transform;
         private readonly MapGenerator _mapGenerator;
         private readonly float _moveInTreeDuration = 0.3f;
@@ -20,9 +22,11 @@ namespace UISample.Features
         private MapNode _currentNode;
         private MapNode _visitedHollow;
         
-        public PlayerMovement(PlayerView view, MapGenerator mapGenerator)
+        public PlayerMovement(PlayerView view, PlayerConfig config, MapGenerator mapGenerator)
         {
             _view = view;
+            _config = config;
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
             _transform = _view.transform;
             _mapGenerator = mapGenerator;
             _currentTree = _mapGenerator.Trees[1];
@@ -44,7 +48,8 @@ namespace UISample.Features
             {
                 _isMoving = true;
                 MoveInTree();
-                _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveInTreeDuration).OnComplete(() =>
+                _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveInTreeDuration)
+                    .OnComplete(() =>
                 {
                     if (_direction == Vector3Int.zero && _currentNode != _visitedHollow && _currentNode.Type is EMapNodeType.Hollow)
                     {
@@ -58,7 +63,8 @@ namespace UISample.Features
             {
                 _isMoving = true;
                 MoveBetweenTree();
-                _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveBetweenTreeDuration).OnComplete(() =>
+                _transform.DOMove(_mapGenerator.MapToWorld(_currentNode.Position), _moveBetweenTreeDuration)
+                    .OnComplete(() =>
                 {
                     _isMoving = false;
                 });
@@ -88,6 +94,7 @@ namespace UISample.Features
                 if (node.Position == _currentNode.Position + _direction)
                 {
                     _currentNode = node;
+                    _audioPlayer.PlaySound(_config.GetRandomWalkClip());
                     return;
                 }
             }
@@ -95,44 +102,50 @@ namespace UISample.Features
 
         private void MoveBetweenTree()
         {
-            if (_currentNode.Type is EMapNodeType.Leaves)
+            if (_currentNode.Type is not EMapNodeType.Leaves)
+                return;
+
+            foreach (var tree in _mapGenerator.Trees)
             {
-                foreach (var tree in _mapGenerator.Trees)
+                if (tree == _currentTree || 
+                    (_mapGenerator.MoveDirection != 0 && 
+                     (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection)) 
+                    continue;
+                foreach (var node in tree.Nodes)
                 {
-                    if (tree == _currentTree || (_mapGenerator.MoveDirection != 0 && (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection))
+                    if (node.Type is not EMapNodeType.Leaves)
                         continue;
-                    foreach (var node in tree.Nodes)
+                    var distance = node.Position - _currentNode.Position;
+                    if (Mathf.Abs(distance.x) != 2)
+                        continue;
+                    if (_direction.x != 0 && distance.magnitude < 6)
                     {
-                        if (node.Type is not EMapNodeType.Leaves)
-                            continue;
-                        var distance = node.Position - _currentNode.Position;
-                        if(Mathf.Abs(distance.x) != 2)
-                            continue;
-                        if (_direction.x != 0)
-                        {
-                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
-                            _currentTree = tree;
-                            _currentNode = node;
-                            return;
-                        }
-                        if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
-                            continue;
-                        if (_direction.y == 1 && distance.y > 0)
-                        {
-                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
-                            _currentTree = tree;
-                            _currentNode = node;
-                            return;
-                        }
-                        if (_direction.y == -1 && distance.y < 0)
-                        {
-                            _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
-                            _currentTree = tree;
-                            _currentNode = node;
-                            return;
-                        }
+                        JumpTo(tree, node);
+                        return;
+                    }
+                    if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
+                        continue;
+                    if (_direction.y == 1 && distance.y > 0)
+                    {
+                        JumpTo(tree, node);
+                        return;
+                    }
+                    if (_direction.y == -1 && distance.y < 0)
+                    {
+                        JumpTo(tree, node);
+                        return;
                     }
                 }
+            }
+            
+            return;
+
+            void JumpTo(MapTree tree, MapNode node)
+            {
+                _mapGenerator.SetDirection(tree.PositionX > _currentTree.PositionX ? 1 : -1);
+                _currentTree = tree;
+                _currentNode = node;
+                _audioPlayer.PlaySound(_config.JumpClip);
             }
         }
         
@@ -150,31 +163,33 @@ namespace UISample.Features
 
         private bool CanMoveBetweenTree()
         {
-            if (_currentNode.Type is EMapNodeType.Leaves)
+            if (_currentNode.Type is not EMapNodeType.Leaves)
+                return false;
+            
+            foreach (var tree in _mapGenerator.Trees)
             {
-                foreach (var tree in _mapGenerator.Trees)
+                if (tree == _currentTree ||
+                    (_mapGenerator.MoveDirection != 0 &&
+                     (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection))
+                    continue;
+                foreach (var node in tree.Nodes)
                 {
-                    if (tree == _currentTree || (_mapGenerator.MoveDirection != 0 && (int)Mathf.Sign(tree.PositionX - _currentTree.PositionX) != _mapGenerator.MoveDirection))
+                    if (node.Type is not EMapNodeType.Leaves)
                         continue;
-                    foreach (var node in tree.Nodes)
-                    {
-                        if (node.Type is not EMapNodeType.Leaves)
-                            continue;
-                        var distance = node.Position - _currentNode.Position;
-                        if(Mathf.Abs(distance.x) != 2)
-                            continue;
-                        if (_direction.x != 0)
-                            return true;
-                        if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
-                            continue;
-                        if (_direction.y == 1 && distance.y > 0)
-                            return true;
-                        if (_direction.y == -1 && distance.y < 0)
-                            return true;
-                    }
+                    var distance = node.Position - _currentNode.Position;
+                    if(Mathf.Abs(distance.x) != 2)
+                        continue;
+                    if (_direction.x != 0 && distance.magnitude < 6)
+                        return true;
+                    if (_direction.y == 0 || node.Position.y == _currentNode.Position.y)
+                        continue;
+                    if (_direction.y == 1 && distance.y > 0)
+                        return true;
+                    if (_direction.y == -1 && distance.y < 0)
+                        return true;
                 }
             }
-
+            
             return false;
         }
     }

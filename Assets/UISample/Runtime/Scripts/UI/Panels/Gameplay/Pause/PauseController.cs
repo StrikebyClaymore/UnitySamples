@@ -8,11 +8,13 @@ namespace UISample.UI
     public class PauseController : BaseController
     {
         private readonly PauseView _view;
+        private readonly AudioPlayer _audioPlayer;
         private readonly AudioSettings _audioSettings;
 
         public PauseController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<PauseView>();
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
             _audioSettings = ServiceLocator.Get<AudioSettings>();
             
             _view.CloseButton.onClick.AddListener(ClosePressed);
@@ -92,6 +94,7 @@ namespace UISample.UI
 
         private void HomePressed()
         {
+            _audioPlayer.PlayUI(_audioPlayer.Config.UIOpenClip);
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             sceneLoader.LoadSceneAsync(GameConstants.MainMenuSceneIndex, LoadSceneMode.Single);
         }

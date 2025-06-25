@@ -11,16 +11,12 @@ namespace UISample.UI
     public class MainMenuController : BaseController
     {
         private readonly MainMenuView _view;
+        private readonly AudioPlayer _audioPlayer;
         
         public MainMenuController(UIContainer uiContainer)
         {
             _view = uiContainer.GetView<MainMenuView>();
-            _view.PlayButton.onClick.AddListener(PlayPressed);
-            _view.PersonalButton.onClick.AddListener(PersonalPressed);
-            _view.SkinsButton.onClick.AddListener(SkinsPressed);
-            _view.ShopButton.onClick.AddListener(ShopPressed);
-            _view.LeaderboardButton.onClick.AddListener(LeaderboardPressed);
-            _view.SettingsButton.onClick.AddListener(SettingsPressed);
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
             var playerData = ServiceLocator.Get<PlayerData>();
             playerData.Acorns.OnValueChanged += UpdateAcorns;
             playerData.Gems.OnValueChanged += UpdateGems;
@@ -32,6 +28,12 @@ namespace UISample.UI
             dailyCalendar.Timer.OnUpdate += UpdateCalendarTime;
             _view.DailyQuestsButton.onClick.AddListener(DailyQuestsPressed);
             _view.DailyCalendarButton.onClick.AddListener(DailyCalendarPressed);
+            _view.PlayButton.onClick.AddListener(PlayPressed);
+            _view.PersonalButton.onClick.AddListener(PersonalPressed);
+            _view.SkinsButton.onClick.AddListener(SkinsPressed);
+            _view.ShopButton.onClick.AddListener(ShopPressed);
+            _view.LeaderboardButton.onClick.AddListener(LeaderboardPressed);
+            _view.SettingsButton.onClick.AddListener(SettingsPressed);
         }
 
         public override void Show(bool instantly = false)
@@ -58,6 +60,7 @@ namespace UISample.UI
 
         private void PlayPressed()
         {
+            _audioPlayer.PlayUI(_audioPlayer.Config.UIOpenClip);
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             sceneLoader.LoadSceneAsync(GameConstants.GameplaySceneIndex, LoadSceneMode.Single);
         }

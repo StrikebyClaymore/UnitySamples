@@ -12,15 +12,17 @@ namespace UISample.UI
         private readonly DailyCalendarView _view;
         private readonly DailyCalendarConfig _config;
         private readonly DailyCalendarManager _calendarManager;
+        private readonly AudioPlayer _audioPlayer;
         
         public DailyCalendarController(UIContainer uiContainer, MainMenuConfigs configs)
         {
             _view = uiContainer.GetView<DailyCalendarView>();
             _config = configs.DailyCalendarConfig;
+            _calendarManager = ServiceLocator.GetLocal<DailyCalendarManager>();
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
+            _calendarManager.Timer.OnUpdate += UpdateCalendarTime;
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _view.ShadowCloseButton.onClick.AddListener(ClosePressed);
-            _calendarManager = ServiceLocator.GetLocal<DailyCalendarManager>();
-            _calendarManager.Timer.OnUpdate += UpdateCalendarTime;
         }
 
         public override void Show(bool instantly = false)
@@ -67,6 +69,7 @@ namespace UISample.UI
             var slot = _view.Slots[index];
             slot.SetState(EDailyRewardState.Rewarded);
             _calendarManager.ClaimReward(index);
+            _audioPlayer.PlayUI(_audioPlayer.Config.UIPickupClip);
         }
     }
 }

@@ -13,9 +13,10 @@ namespace UISample.UI
         private readonly DailyQuestView _view;
         private readonly DailyQuestsConfig _config;
         private readonly DailyQuestsManager _questsManager;
+        private readonly AudioPlayer _audioPlayer;
+        private readonly MainMenuController _mainMenuController;
         private readonly MonoPool<QuestSlot> _slotsPool;
         private readonly List<QuestSlot> _slots = new();
-        private MainMenuController _mainMenuController;
         private Dictionary<EQuestCategory, List<Quest>> _quests;
         private EQuestCategory _selectedCategory;
 
@@ -24,8 +25,9 @@ namespace UISample.UI
             _view = uiContainer.GetView<DailyQuestView>();
             _config = configs.DailyQuestsConfig;
             _questsManager = ServiceLocator.Get<DailyQuestsManager>();
-            _slotsPool = new MonoPool<QuestSlot>(_config.QuestSlotPrefab, 1, new GameObject("Quests Pool").transform, true);
+            _audioPlayer = ServiceLocator.Get<AudioPlayer>();
             _mainMenuController = _sceneUI.GetController<MainMenuController>();
+            _slotsPool = new MonoPool<QuestSlot>(_config.QuestSlotPrefab, 1, new GameObject("Quests Pool").transform, true);
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _view.ShadowCloseButton.onClick.AddListener(ClosePressed);
             foreach (var pair in _view.Categories)
@@ -72,6 +74,7 @@ namespace UISample.UI
             _selectedCategory = category;
             _view.Categories[category].EnableHighlight();
             DrawCategory(_selectedCategory);
+            _audioPlayer.PlayUI(_audioPlayer.Config.UISelectClip);
         }
 
         private void DeselectCategories()
@@ -105,6 +108,7 @@ namespace UISample.UI
                 return;
             slot.SetState(EQuestState.Rewarded);
             _questsManager.ClaimReward(quest);
+            _audioPlayer.PlayUI(_audioPlayer.Config.UIPickupClip);
         }
         
         private void QuestCompleted(Quest quest)
