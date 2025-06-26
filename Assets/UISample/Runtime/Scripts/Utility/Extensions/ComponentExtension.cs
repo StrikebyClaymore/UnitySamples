@@ -14,7 +14,6 @@ namespace UISample.Utility
             component.gameObject.SetActive(false);
         }
         
-        
         public static void SetActive(this Component component, bool active)
         {
             component.gameObject.SetActive(active);

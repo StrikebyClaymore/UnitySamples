@@ -44,7 +44,6 @@ namespace UISample.UI
             {
                 var skinData = _config.Skins[i];
                 var slot = GameObject.Instantiate(_config.SkinSlotPrefab, _view.SlotsContainer);
-                Debug.Log($"{i} {_skins[i].IsUnlocked}");
                 slot.Initialize(skinData, _skins[i].IsUnlocked, i, SkinSlotPressed);
                 _slots.Add(slot);
             }

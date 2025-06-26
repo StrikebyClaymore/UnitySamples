@@ -4,6 +4,7 @@ using UISample.Data;
 using UISample.Features;
 using UISample.Infrastructure;
 using UISample.Utility;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UISample.UI
@@ -60,6 +61,12 @@ namespace UISample.UI
         public void SetQuestNotification(bool enable)
         {
             _view.DailyQuestsNotification.SetActive(enable);
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
+            _playerData.SelectedSkin.OnValueChanged -= SkinChanged;
         }
 
         private void PlayPressed()
