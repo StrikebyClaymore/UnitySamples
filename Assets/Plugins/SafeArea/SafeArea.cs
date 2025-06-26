@@ -48,7 +48,9 @@ namespace Crystal
         /// <summary>
         /// Simulation mode for use in editor only. This can be edited at runtime to toggle between different safe areas.
         /// </summary>
+#pragma warning disable UDR0001
         public static SimDevice Sim = SimDevice.None;
+#pragma warning restore UDR0001
 
         /// <summary>
         /// Normalised safe areas for iPhone X with Home indicator (ratios are identical to Xs, 11 Pro). Absolute values:
@@ -121,7 +123,9 @@ namespace Crystal
 
         public delegate Rect SafeAreaAdjuster(Rect inputRect);
 
+#pragma warning disable UDR0001
         private static SafeAreaAdjuster AdjustSafeAreaCallback;
+#pragma warning restore UDR0001
 
         public static void SetSafeAreaAdjuster(SafeAreaAdjuster safeAreaAdjuster)
         {

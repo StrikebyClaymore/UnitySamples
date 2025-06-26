@@ -12,8 +12,12 @@
         public const string DailyCalendarTimerKey = "DailyCalendarTimer";
         public const string DailyCalendarRewards = "DailyCalendarRewards";
         public const string LastDailyCalendarRewardIndex = "LastDailyCalendarRewardIndex";
+        
         public const string DailyQuestTimerKey = "DailyQuestTimerKey";
         public const string WeeklyQuestTimerKey = "WeeklyQuestTimerKey";
         public const string DailyQuests = "DailyQuests";
+        
+        public const string Skins = "Skins";
+        public const string SelectedSkinId = "SelectedSkinId";
     }
 }

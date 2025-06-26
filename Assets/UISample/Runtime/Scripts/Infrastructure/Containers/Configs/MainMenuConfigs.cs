@@ -7,5 +7,6 @@ namespace UISample.Infrastructure
     {
         [field: SerializeField] public DailyCalendarConfig DailyCalendarConfig { get; private set; }
         [field: SerializeField] public DailyQuestsConfig DailyQuestsConfig { get; private set; }
+        [field: SerializeField] public SkinsConfig SkinsConfig { get; private set; }
     }
 }

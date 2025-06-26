@@ -20,7 +20,20 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 99
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_IgnorePlatformSupport: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -59,6 +72,8 @@ SpriteAtlas:
     - {fileID: 2800000, guid: 623df017cd9375c49946605e46d06755, type: 3}
     - {fileID: 2800000, guid: e66426b52acd2a948999e48ec901d97b, type: 3}
     - {fileID: 2800000, guid: 8bcb45200576a2749b900ea43bc98bbd, type: 3}
+    - {fileID: 2800000, guid: 21bd16f5188d640468c6158b40f986ee, type: 3}
+    - {fileID: 2800000, guid: 0cd769cb1e5221a4bb18813b9cf8a618, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
@@ -74,6 +89,7 @@ SpriteAtlas:
     - 8e94b2d3ff544254c8dbfd0827aa96a3: 21300000
     - f4bd5c14857777c448334cc301584a75: 21300000
     - e66426b52acd2a948999e48ec901d97b: 21300000
+    - 21bd16f5188d640468c6158b40f986ee: 21300000
     - 447c9d16b1e1c894dab627473f6d7c75: 21300000
     - 0b731f164be2ac94c97433c60f99e173: 21300000
     - cfd28c4685f7c504c8541bb8903d4ec8: 21300000
@@ -87,6 +103,7 @@ SpriteAtlas:
     - e1fae94be64d32249a3a7de030d185db: 21300000
     - 9fa25d7ba9e486a49bd18911151230d7: 21300000
     - 6170139bb959e8e408695ca6d14b4a4f: 21300000
+    - 0cd769cb1e5221a4bb18813b9cf8a618: 21300000
     - aafe206e453ce574c8cd57550e98da0c: 21300000
     - ce30ae4f5d358f243ad68cbfc8c41f4d: 21300000
     - bf99bf5f0d2339f44b1dca9c18a3b4da: 21300000
@@ -103,6 +120,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 8e94b2d3ff544254c8dbfd0827aa96a3, type: 3}
   - {fileID: 21300000, guid: f4bd5c14857777c448334cc301584a75, type: 3}
   - {fileID: 21300000, guid: e66426b52acd2a948999e48ec901d97b, type: 3}
+  - {fileID: 21300000, guid: 21bd16f5188d640468c6158b40f986ee, type: 3}
   - {fileID: 21300000, guid: 447c9d16b1e1c894dab627473f6d7c75, type: 3}
   - {fileID: 21300000, guid: 0b731f164be2ac94c97433c60f99e173, type: 3}
   - {fileID: 21300000, guid: cfd28c4685f7c504c8541bb8903d4ec8, type: 3}
@@ -116,6 +134,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: e1fae94be64d32249a3a7de030d185db, type: 3}
   - {fileID: 21300000, guid: 9fa25d7ba9e486a49bd18911151230d7, type: 3}
   - {fileID: 21300000, guid: 6170139bb959e8e408695ca6d14b4a4f, type: 3}
+  - {fileID: 21300000, guid: 0cd769cb1e5221a4bb18813b9cf8a618, type: 3}
   - {fileID: 21300000, guid: aafe206e453ce574c8cd57550e98da0c, type: 3}
   - {fileID: 21300000, guid: ce30ae4f5d358f243ad68cbfc8c41f4d, type: 3}
   - {fileID: 21300000, guid: bf99bf5f0d2339f44b1dca9c18a3b4da, type: 3}
@@ -131,6 +150,7 @@ SpriteAtlas:
   - White Note Off
   - White Move Up
   - White Sound On
+  - White Close
   - CircleFrame2
   - CircleFrame
   - White Check
@@ -144,6 +164,7 @@ SpriteAtlas:
   - White Music
   - White DropDown
   - White Pause
+  - lock
   - White Note
   - White Acorn
   - White Home

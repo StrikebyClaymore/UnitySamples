@@ -11,17 +11,21 @@ namespace UISample.UI
     public class MainMenuController : BaseController
     {
         private readonly MainMenuView _view;
+        private readonly SkinsConfig _skinsConfig;
         private readonly AudioPlayer _audioPlayer;
+        private readonly PlayerData _playerData;
         
-        public MainMenuController(UIContainer uiContainer)
+        public MainMenuController(UIContainer uiContainer, MainMenuConfigs configsContainer)
         {
             _view = uiContainer.GetView<MainMenuView>();
+            _skinsConfig = configsContainer.SkinsConfig;
             _audioPlayer = ServiceLocator.Get<AudioPlayer>();
-            var playerData = ServiceLocator.Get<PlayerData>();
-            playerData.Acorns.OnValueChanged += UpdateAcorns;
-            playerData.Gems.OnValueChanged += UpdateGems;
-            UpdateAcorns(playerData.Acorns.Value);
-            UpdateGems(playerData.Gems.Value);
+            _playerData = ServiceLocator.Get<PlayerData>();
+            _playerData.Acorns.OnValueChanged += UpdateAcorns;
+            _playerData.Gems.OnValueChanged += UpdateGems;
+            _playerData.SelectedSkin.OnValueChanged += SkinChanged;
+            UpdateAcorns(_playerData.Acorns.Value);
+            UpdateGems(_playerData.Gems.Value);
             _view.DailyCalendarNotification.Hide();
             _view.DailyQuestsNotification.Hide();
             var dailyCalendar = ServiceLocator.GetLocal<DailyCalendarManager>();
@@ -84,7 +88,7 @@ namespace UISample.UI
         {
             _sceneUI.ShowController<LeaderboardController>();
         }
-        
+
         private void SettingsPressed()
         {
             _sceneUI.ShowController<SettingsController>();
@@ -113,6 +117,11 @@ namespace UISample.UI
         private void DailyCalendarPressed()
         {
             _sceneUI.ShowController<DailyCalendarController>();
+        }
+
+        private void SkinChanged(int id)
+        {
+            _view.MenuCharacter.SetHatSprite(id == 0 ? null : _skinsConfig.Skins[id].Sprite);
         }
     }
 }

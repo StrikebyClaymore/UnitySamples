@@ -21,6 +21,7 @@ namespace UISample.Infrastructure
         {
             ServiceLocator.ClearLocal();
             InstallDailyCalendar();
+            InstallSkins();
             InstallSceneUI();
         }
 
@@ -29,6 +30,7 @@ namespace UISample.Infrastructure
             var audioPlayer = ServiceLocator.Get<AudioPlayer>();
             audioPlayer.PlayMusic(audioPlayer.Config.MainMusicClip);
             ServiceLocator.GetLocal<DailyCalendarManager>().Initialize();
+            ServiceLocator.GetLocal<SkinsManager>().Initialize();
             ServiceLocator.Get<DailyQuestsManager>().Initialize();
             PlayerPrefs.Save();
             Initialized = true;
@@ -41,16 +43,21 @@ namespace UISample.Infrastructure
             ServiceLocator.Get<ApplicationLoop>().AddUpdatable(dailyCalendar);
         }
 
+        private void InstallSkins()
+        {
+            ServiceLocator.RegisterLocal<SkinsManager>(new SkinsManager(_configsContainer));
+        }
+
         private void InstallSceneUI()
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();
             sceneUI.ClearControllers();
-            sceneUI.RegisterController(typeof(MainMenuController), new MainMenuController(_uiContainer));
+            sceneUI.RegisterController(typeof(MainMenuController), new MainMenuController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(SettingsController), new SettingsController(_uiContainer));
             sceneUI.RegisterController(typeof(DailyQuestController), new DailyQuestController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(DailyCalendarController), new DailyCalendarController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(PersonalController), new PersonalController(_uiContainer));
-            sceneUI.RegisterController(typeof(SkinsController), new SkinsController(_uiContainer));
+            sceneUI.RegisterController(typeof(SkinsController), new SkinsController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer));
             sceneUI.RegisterController(typeof(LeaderboardController), new LeaderboardController(_uiContainer));
             sceneUI.ShowController<MainMenuController>();

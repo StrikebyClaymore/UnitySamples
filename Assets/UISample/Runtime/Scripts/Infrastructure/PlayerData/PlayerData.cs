@@ -14,6 +14,8 @@ namespace UISample.Infrastructure
         public readonly PlayerDataValue<int> LastRewardIndex;
         public readonly PlayerDataValue<string> DailyCalendarRewards;
         public readonly PlayerDataValue<string> DailyQuests;
+        public readonly PlayerDataValue<string> Skins;
+        public readonly PlayerDataValue<int> SelectedSkin;
 
         public PlayerData(PlayerDataDefaultSettings defaultSettings)
         {
@@ -26,6 +28,8 @@ namespace UISample.Infrastructure
             LastRewardIndex = new PlayerDataValue<int>(Data, PlayerDataConstants.LastDailyCalendarRewardIndex);
             DailyCalendarRewards = new PlayerDataValue<string>(Data, PlayerDataConstants.DailyCalendarRewards);
             DailyQuests = new PlayerDataValue<string>(Data, PlayerDataConstants.DailyQuests);
+            Skins = new PlayerDataValue<string>(Data, PlayerDataConstants.Skins);
+            SelectedSkin = new PlayerDataValue<int>(Data, PlayerDataConstants.SelectedSkinId);
         }
 
         public void Initialize()
@@ -39,6 +43,8 @@ namespace UISample.Infrastructure
             LastRewardIndex.Initialize();
             DailyCalendarRewards.Initialize();
             DailyQuests.Initialize();
+            Skins.Initialize();
+            SelectedSkin.Initialize();
         }
     }
 }

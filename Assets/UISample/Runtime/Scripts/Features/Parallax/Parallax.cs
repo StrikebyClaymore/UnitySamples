@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UISample.Infrastructure;
+﻿using UISample.Infrastructure;
 using UISample.Utility;
 using UnityEngine;
 

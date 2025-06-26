@@ -15,6 +15,8 @@ namespace UISample.UI
         [field: SerializeField] public Button DailyCalendarButton { get; private set; }
         [field: SerializeField] public GameObject DailyCalendarNotification { get; private set; }
         [field: SerializeField] public TMP_Text DailyCalendarTimerText { get; private set; }
+        [field: Header("Character")]
+        [field: SerializeField] public MenuCharacter MenuCharacter { get; private set; }
         [field: Header("Play")]
         [field: SerializeField] public Button PlayButton { get; private set; }
         [field: Header("Navigation")]
