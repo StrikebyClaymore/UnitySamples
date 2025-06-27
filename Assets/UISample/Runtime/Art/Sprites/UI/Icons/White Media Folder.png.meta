@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e90101c24802e674ab7f6c4baa5772bc
+guid: bf78ce1422e4ea34e836ecc1fee84291
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5333876434775260332
-    second: White Dollar Sign_0
+      213: 8164811686404614837
+    second: White Media Folder_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +48,7 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
@@ -72,7 +72,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 128
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -139,13 +139,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: White Dollar Sign_0
+      name: White Media Folder_0
       rect:
         serializedVersion: 2
-        x: 108
-        y: 0
-        width: 296
-        height: 512
+        x: 0
+        y: 40
+        width: 512
+        height: 432
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cac3b9a7b5cb50a40800000000000000
-      internalID: 5333876434775260332
+      spriteID: 5baea1248fc3f4170800000000000000
+      internalID: 8164811686404614837
       vertices: []
       indices: 
       edges: []
@@ -170,7 +170,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      White Dollar Sign_0: 5333876434775260332
+      White Media Folder_0: 8164811686404614837
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
