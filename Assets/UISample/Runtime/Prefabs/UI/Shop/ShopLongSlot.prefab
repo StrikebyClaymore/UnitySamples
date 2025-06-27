@@ -1200,6 +1200,7 @@ GameObject:
   - component: {fileID: 1865823194754170462}
   - component: {fileID: 2878094155572739200}
   - component: {fileID: 917571923001636578}
+  - component: {fileID: 1973074939438751869}
   m_Layer: 5
   m_Name: ShopLongSlot
   m_TagString: Untagged
@@ -1314,6 +1315,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1973074939438751869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5577484204969818325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c2a9667d5b4484ab2d5b8f777b7491b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 917571923001636578}
 --- !u!1 &6337230514941996259
 GameObject:
   m_ObjectHideFlags: 0

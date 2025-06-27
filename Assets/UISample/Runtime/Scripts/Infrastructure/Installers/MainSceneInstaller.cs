@@ -22,6 +22,7 @@ namespace UISample.Infrastructure
             ServiceLocator.ClearLocal();
             InstallDailyCalendar();
             InstallSkins();
+            InstallShop();
             InstallSceneUI();
         }
 
@@ -48,6 +49,11 @@ namespace UISample.Infrastructure
             ServiceLocator.RegisterLocal<SkinsManager>(new SkinsManager(_configsContainer));
         }
 
+        private void InstallShop()
+        {
+            ServiceLocator.RegisterLocal<Shop>(new Shop(_configsContainer));
+        }
+
         private void InstallSceneUI()
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();
@@ -58,7 +64,7 @@ namespace UISample.Infrastructure
             sceneUI.RegisterController(typeof(DailyCalendarController), new DailyCalendarController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(PersonalController), new PersonalController(_uiContainer));
             sceneUI.RegisterController(typeof(SkinsController), new SkinsController(_uiContainer, _configsContainer));
-            sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer));
+            sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(LeaderboardController), new LeaderboardController(_uiContainer));
             sceneUI.ShowController<MainMenuController>();
         }
