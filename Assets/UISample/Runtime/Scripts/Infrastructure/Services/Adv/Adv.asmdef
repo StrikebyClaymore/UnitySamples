@@ -1,0 +1,17 @@
+{
+    "name": "Adv",
+    "rootNamespace": "",
+    "references": [
+        "GUID:eef6182f69ed40a4e8da291d21e9bf2b",
+        "GUID:e64baf239d3dbe1488d9a36c532f5344"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

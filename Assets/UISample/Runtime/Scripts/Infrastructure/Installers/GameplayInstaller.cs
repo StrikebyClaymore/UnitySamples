@@ -14,7 +14,7 @@ namespace UISample.Infrastructure
         [SerializeField] private Parallax _parallax;
         [SerializeField] private PlayerInstaller _playerInstaller;
         [SerializeField] private Tilemap _tilemap;
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         private void Start()
         {
@@ -37,7 +37,7 @@ namespace UISample.Infrastructure
             ServiceLocator.GetLocal<MapGenerator>().Initialize();
             _playerInstaller.Install();
             EventBus.OnAddQuestValue.Invoke(EQuestType.Play, EQuestTarget.Times, 1);
-            Initialized = true;
+            IsInitialized = true;
         }
 
         private void InstallSceneUI()

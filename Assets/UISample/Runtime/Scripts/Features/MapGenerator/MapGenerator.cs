@@ -27,7 +27,7 @@ namespace UISample.Features
         }
         public MapNode PlayerSpawnNode { get; private set; }
         public int MoveDirection { get; private set; }
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public MapGenerator(GameplayConfigs configs, Tilemap tilemap)
         {
@@ -40,7 +40,7 @@ namespace UISample.Features
         public void Initialize()
         {
             Generate();
-            Initialized = true;
+            IsInitialized = true;
         }
 
         public void CustomUpdate()

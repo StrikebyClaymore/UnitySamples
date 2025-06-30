@@ -9,7 +9,7 @@ namespace UISample.Infrastructure
     {
         [SerializeField] private MainMenuConfigs _configsContainer;
         [SerializeField] private UIContainer _uiContainer;
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         private void Start()
         {
@@ -35,7 +35,7 @@ namespace UISample.Infrastructure
             ServiceLocator.GetLocal<Shop>().Initialize();
             ServiceLocator.Get<DailyQuestsManager>().Initialize();
             PlayerPrefs.Save();
-            Initialized = true;
+            IsInitialized = true;
         }
 
         private void InstallDailyCalendar()
@@ -67,6 +67,7 @@ namespace UISample.Infrastructure
             sceneUI.RegisterController(typeof(SkinsController), new SkinsController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(LeaderboardController), new LeaderboardController(_uiContainer));
+            sceneUI.RegisterController(typeof(AdvController), new AdvController(_uiContainer));
             sceneUI.ShowController<MainMenuController>();
         }
     }

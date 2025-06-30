@@ -12,7 +12,7 @@ namespace UISample.Features
         private readonly PlayerData _playerData;
         private SkinsController _skinsController;
         private Skin[] _skins;
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public SkinsManager(MainMenuConfigs configsContainer)
         {
@@ -25,7 +25,7 @@ namespace UISample.Features
             _skinsController = ServiceLocator.Get<SceneUI>().GetController<SkinsController>();
             LoadOrCreate();
             _skinsController.InitializeSlots(_skins);
-            Initialized = true;
+            IsInitialized = true;
         }
 
         public void UnlockSkin(int id)

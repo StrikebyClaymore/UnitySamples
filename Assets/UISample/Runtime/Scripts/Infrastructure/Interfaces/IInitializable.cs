@@ -2,7 +2,7 @@
 {
     public interface IInitializable
     {
-        public bool Initialized { get; }
+        public bool IsInitialized { get; }
 
         public void Initialize();
     }

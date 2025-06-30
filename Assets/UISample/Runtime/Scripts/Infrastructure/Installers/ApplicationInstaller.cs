@@ -11,7 +11,7 @@ namespace UISample.Infrastructure
     {
         [SerializeField] private UIContainer _uiContainer;
         [SerializeField] private ApplicationConfigs _configsContainer;
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public override void Install()
         {
@@ -24,6 +24,8 @@ namespace UISample.Infrastructure
             InstallAudioPlayer();
             InstallSceneUI();
             InstallQuestsManager();
+            InstallAdvManager();
+            InstallPurchaseManager();
         }
 
         public void Initialize()
@@ -31,7 +33,7 @@ namespace UISample.Infrastructure
             ServiceLocator.Get<PlayerData>().Initialize();
             ServiceLocator.Get<AudioSettings>().Initialize();
             ServiceLocator.Get<SceneUI>().Initialize();
-            Initialized = true;
+            IsInitialized = true;
             StartCoroutine(LoadMainScene());
         }
 
@@ -40,6 +42,16 @@ namespace UISample.Infrastructure
             var sceneLoader = ServiceLocator.Get<SceneLoader>();
             yield return sceneLoader.LoadSceneAsync(GameConstants.MainMenuSceneIndex);
             sceneLoader.UnloadSceneAsync(GameConstants.LoadingSceneIndex);
+        }
+        
+        private void InstallPurchaseManager()
+        {
+            ServiceLocator.Register(new StubPurchaseManager());
+        }
+
+        private void InstallAdvManager()
+        {
+            ServiceLocator.Register(new StubAdvManager());
         }
         
         private void InstallQuestsManager()

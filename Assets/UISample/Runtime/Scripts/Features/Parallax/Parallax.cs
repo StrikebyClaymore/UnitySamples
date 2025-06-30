@@ -28,13 +28,13 @@ namespace UISample.Features
             }
         }
 
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public void Initialize()
         {
             if(_target != null)
                 _lastTargetPosition = _target.position;
-            Initialized = true;
+            IsInitialized = true;
         }
         
         public void CustomUpdate()

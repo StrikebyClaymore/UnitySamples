@@ -11,11 +11,11 @@ namespace UISample.Infrastructure
         protected readonly Dictionary<Type, BaseController> _controllers = new();
         protected readonly Dictionary<Type, BaseController> _showedControllers = new();
         protected readonly Stack<List<Type>> _previousControllersStack = new();
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public void Initialize()
         {
-            Initialized = true;
+            IsInitialized = true;
         }
 
         public void RegisterController(Type type, BaseController controller)

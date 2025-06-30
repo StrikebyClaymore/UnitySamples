@@ -23,7 +23,7 @@ namespace UISample.Features
 
         private Dictionary<EQuestCategory, List<Quest>> _quests;
 
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
 
         public Action<Quest> OnQuestCompleted;
 
@@ -49,7 +49,7 @@ namespace UISample.Features
             if(_waitClaimQuests.Count > 0)
                 _mainMenuController.SetQuestNotification(true);
             _dailyQuestController.InitializeSlots(_quests);
-            Initialized = true;
+            IsInitialized = true;
         }
 
         public void CustomUpdate()

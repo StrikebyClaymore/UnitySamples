@@ -1,4 +1,5 @@
 ﻿using CustomInspector;
+using UISample.Infrastructure;
 using UnityEngine;
 
 namespace UISample.Features
@@ -7,7 +8,7 @@ namespace UISample.Features
     public class ProductData
     {
         [field: SerializeField, ReadOnly] public int Index { get; private set; }
-        [field: SerializeField] public string Id { get; private set; }
+        [field: SerializeField, ReadOnly] public string Id { get; private set; }
         [field: SerializeField] public EProducts Type { get; private set; }
         [field: SerializeField] public int Amount { get; private set; }
         [field: SerializeField] public ECurrency Currency { get; private set; }
@@ -17,6 +18,7 @@ namespace UISample.Features
         public void SetData(int index)
         {
             Index = index;
+            Id = ProductList.Products[index];
         }  
 #endif
     }

@@ -18,7 +18,7 @@ namespace UISample.Features
         private MainMenuController _mainMenuController;
         public PersistentTimer Timer => _timer;
         private DailyReward[] _rewards;
-        public bool Initialized { get; private set; }
+        public bool IsInitialized { get; private set; }
         
         public DailyCalendarManager(MainMenuConfigs configs)
         {
@@ -36,7 +36,7 @@ namespace UISample.Features
             _mainMenuController = sceneUI.GetController<MainMenuController>();
             LoadOrCreateData();
             _timer.Start();
-            Initialized = true;
+            IsInitialized = true;
         }
 
         public void CustomUpdate()

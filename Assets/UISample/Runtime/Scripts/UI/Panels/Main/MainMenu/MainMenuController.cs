@@ -4,7 +4,6 @@ using UISample.Data;
 using UISample.Features;
 using UISample.Infrastructure;
 using UISample.Utility;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UISample.UI
