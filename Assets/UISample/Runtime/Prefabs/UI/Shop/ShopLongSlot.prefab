@@ -1328,6 +1328,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 917571923001636578}
+  _productIcon: {fileID: 7526050769326162351}
+  _amountText: {fileID: 0}
+  _costIcon: {fileID: 3490120365388033107}
+  _costText: {fileID: 7018452325938093487}
 --- !u!1 &6337230514941996259
 GameObject:
   m_ObjectHideFlags: 0

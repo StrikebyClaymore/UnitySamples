@@ -16,7 +16,7 @@ MonoBehaviour:
   - <Type>k__BackingField: 0
     <Icon>k__BackingField: {fileID: 21300000, guid: fbb2e44b2bca99d458f35201ecfd9d7d, type: 3}
   - <Type>k__BackingField: 1
-    <Icon>k__BackingField: {fileID: 21300000, guid: fbb2e44b2bca99d458f35201ecfd9d7d, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: aa690ae72e998f54b8c8b099d2165bab, type: 3}
   <Quests>k__BackingField:
     _items:
     - Key: 0

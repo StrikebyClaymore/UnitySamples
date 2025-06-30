@@ -32,6 +32,7 @@ namespace UISample.Infrastructure
             audioPlayer.PlayMusic(audioPlayer.Config.MainMusicClip);
             ServiceLocator.GetLocal<DailyCalendarManager>().Initialize();
             ServiceLocator.GetLocal<SkinsManager>().Initialize();
+            ServiceLocator.GetLocal<Shop>().Initialize();
             ServiceLocator.Get<DailyQuestsManager>().Initialize();
             PlayerPrefs.Save();
             Initialized = true;

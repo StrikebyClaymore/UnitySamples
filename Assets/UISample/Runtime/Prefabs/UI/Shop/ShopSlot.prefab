@@ -716,6 +716,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _button: {fileID: 4741963359919486130}
+  _productIcon: {fileID: 6291718663401345701}
+  _amountText: {fileID: 2731019397744533833}
+  _costIcon: {fileID: 7636848140238206049}
+  _costText: {fileID: 95666507874116359}
 --- !u!1 &9047374394963609956
 GameObject:
   m_ObjectHideFlags: 0

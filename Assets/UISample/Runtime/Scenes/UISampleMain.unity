@@ -355,6 +355,7 @@ MonoBehaviour:
   <DailyCalendarConfig>k__BackingField: {fileID: 11400000, guid: aabe63f81a7c99c4eb3a0ff9c811271b, type: 2}
   <DailyQuestsConfig>k__BackingField: {fileID: 11400000, guid: c848e1b67d21c9c448f2662960c4a447, type: 2}
   <SkinsConfig>k__BackingField: {fileID: 11400000, guid: 6d9188c3ae0c0f34bb6e126d95640609, type: 2}
+  <ShopConfig>k__BackingField: {fileID: 11400000, guid: 440394b6445631a4cadc2fee73439e63, type: 2}
 --- !u!1001 &9130292920201700210
 PrefabInstance:
   m_ObjectHideFlags: 0
