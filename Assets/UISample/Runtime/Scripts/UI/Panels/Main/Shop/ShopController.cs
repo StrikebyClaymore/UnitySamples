@@ -47,9 +47,7 @@ namespace UISample.UI
 
         private void SlotPressed(int index)
         {
-            var purchased = _shop.TryPurchaseProduct(index);
-            if(purchased)
-                _shop.ConsumeProduct(index);
+            _shop.TryPurchaseProduct(index);
         }
 
         private void ClosePressed()

@@ -1,4 +1,5 @@
-﻿using Plugins.ServiceLocator;
+﻿using System;
+using Plugins.ServiceLocator;
 using UISample.Data;
 using UISample.Infrastructure;
 using UISample.UI;
@@ -9,51 +10,62 @@ namespace UISample.Features
     {
         private readonly ShopConfig _config;
         private readonly PlayerData _playerData;
+        private readonly IAdvManager _advManager;
+        private readonly IPurchaseManager _purchaseManager;
         private ShopController _shopController;
+        private AdvController _advController;
+        private RouletteController _rouletteController;
+        private string _currentProductId;
         public bool IsInitialized { get; private set; }
+        public event Action<bool> OnPurchaseCompleted;
         
         public Shop(MainMenuConfigs configsContainer)
         {
             _config = configsContainer.ShopConfig;
             _playerData = ServiceLocator.Get<PlayerData>();
+            _advManager = ServiceLocator.Get<IAdvManager>();
+            _purchaseManager = ServiceLocator.Get<IPurchaseManager>();
         }
 
         public void Initialize()
         {
-            _shopController = ServiceLocator.Get<SceneUI>().GetController<ShopController>();
+            var sceneUI = ServiceLocator.Get<SceneUI>();
+            _shopController = sceneUI.GetController<ShopController>();
+            _advController = sceneUI.GetController<AdvController>();
+            _rouletteController = sceneUI.GetController<RouletteController>();
             _shopController.InitializeSlots();
             IsInitialized = true;
         }
 
-        public bool TryPurchaseProduct(int index)
+        public void TryPurchaseProduct(int index)
         {
             var product = _config.GetProduct(index);
+            _currentProductId = product.Id;
             var cost = product.Cost;
+            bool success = false;
             switch (product.Currency)
             {
                 case ECurrency.Acorns:
-                    if (_playerData.Acorns.Value < cost)
-                        return false;
-                    _playerData.Acorns.Value -= cost;
-                    return true;
+                    success = TrySpendValue(_playerData.Acorns, cost);
+                    break;
                 case ECurrency.Gems:
-                    if (_playerData.Gems.Value < cost)
-                        return false;
-                    _playerData.Gems.Value -= cost;
-                    return true;
+                    success = TrySpendValue(_playerData.Gems, cost);
+                    break;
                 case ECurrency.RealMoney:
-                    // Handle real money purchase
-                    break;
+                    _purchaseManager.OnProductPurchased += HandlePurchaseResult;
+                    _purchaseManager.Purchase(product.Id);
+                    return;
                 case ECurrency.Adv:
-                    // Handle adv purchase
-                    break;
+                    _advController.Show();
+                    _advController.OnChosen += AdvChoiceResult;
+                    return;
             }
-            return false;
+            PurchaseCompleted(product.Id, success);
         }
-        
-        public void ConsumeProduct(int index)
+
+        public void ConsumeProduct(string productId)
         {
-            var product = _config.GetProduct(index);
+            var product = _config.GetProduct(productId);
             switch (product.Type)
             {
                 case EProducts.Gem:
@@ -61,8 +73,51 @@ namespace UISample.Features
                     break;
                 case EProducts.RandomSkin:
                     // Handle unlock random skin
+                    //_rouletteController.Show();
                     break;
             }
+        }
+
+        private void PurchaseCompleted(string productId, bool success)
+        {
+            if (success)
+                ConsumeProduct(productId);
+            OnPurchaseCompleted?.Invoke(success);
+            _currentProductId = null;
+        }
+
+        private bool TrySpendValue(PlayerDataValue<int> data, int amount)
+        {
+            if (data.Value < amount)
+                return false;
+            data.Value -= amount;
+            return true;
+        }
+
+        private void HandlePurchaseResult(string productId, bool success)
+        {
+            _purchaseManager.OnProductPurchased -= HandlePurchaseResult;
+            PurchaseCompleted(productId, success);
+        }
+
+        private void AdvChoiceResult(bool showRewardAdv)
+        {
+            _advController.OnChosen -= AdvChoiceResult;
+            if (showRewardAdv)
+            {
+                _advManager.OnRewardAdvShown += HandleRewardAdvResult;
+                _advManager.ShowRewardAdv();
+            }
+            else
+            {
+                PurchaseCompleted(_currentProductId, false);
+            }
+        }
+
+        private void HandleRewardAdvResult(bool success)
+        {
+            _advManager.OnRewardAdvShown -= HandleRewardAdvResult;
+            PurchaseCompleted(_currentProductId, success);
         }
     }
 }

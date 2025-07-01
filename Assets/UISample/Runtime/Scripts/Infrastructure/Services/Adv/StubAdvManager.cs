@@ -19,7 +19,7 @@ namespace UISample.Infrastructure
 
         public void ShowRewardAdv()
         {
-            
+            ReceiveRewardAdvShown(true);
         }
 
         public void ReceiveRewardAdvShown(bool success)

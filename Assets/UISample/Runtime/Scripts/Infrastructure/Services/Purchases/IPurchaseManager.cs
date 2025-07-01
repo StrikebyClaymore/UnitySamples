@@ -5,8 +5,10 @@ namespace UISample.Infrastructure
 {
     public interface IPurchaseManager : IService, IInitializable
     {
-        Action<string> OnProductPurchased { get; set; }
+        event Action<string, bool> OnProductPurchased;
 
-        void Purchase();
+        void Purchase(string productId);
+        
+        void ReceiveProductPurchased(string productId, bool success);
     }
 }

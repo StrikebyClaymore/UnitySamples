@@ -68,6 +68,7 @@ namespace UISample.Infrastructure
             sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(LeaderboardController), new LeaderboardController(_uiContainer));
             sceneUI.RegisterController(typeof(AdvController), new AdvController(_uiContainer));
+            sceneUI.RegisterController(typeof(RouletteController), new RouletteController(_uiContainer));
             sceneUI.ShowController<MainMenuController>();
         }
     }

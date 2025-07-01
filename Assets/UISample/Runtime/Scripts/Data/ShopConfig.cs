@@ -10,12 +10,16 @@ namespace UISample.Data
     {
         [field: SerializeField] public Pair<EProducts, Sprite>[] ProductIcons { get; private set; }
         [field: SerializeField] public Pair<ECurrency, Sprite>[] CurrencyIcons { get; private set; }
-
         [field: SerializeField] public ProductData[] Products { get; private set; }
 
         public ProductData GetProduct(int index)
         {
             return Products[index];
+        }
+        
+        public ProductData GetProduct(string id)
+        {
+            return Products.FirstOrDefault(x => x.Id == id);
         }
         
         public Sprite GetIcon(EProducts productType)
