@@ -36,7 +36,7 @@ namespace UISample.UI
 
         public void PlaySound(AudioClip clip)
         {
-            ServiceLocator.Get<AudioPlayer>().PlayUI(clip);
+            //ServiceLocator.Get<AudioPlayer>().PlayUI(clip);
         }
 
         private void SetGameObjectActive(bool active)

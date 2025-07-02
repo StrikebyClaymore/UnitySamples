@@ -305,6 +305,7 @@ MonoBehaviour:
   _parallax: {fileID: 757406136}
   _playerInstaller: {fileID: 1852212204}
   _tilemap: {fileID: 7213042478151354925}
+  _rootCanvas: {fileID: 7486654115958108459}
 --- !u!114 &1852212204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,6 +1753,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d7d7608c8d9d064c8647fed16a8f756, type: 3}
+--- !u!223 &7486654115958108459 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2553862083375577004, guid: 1d7d7608c8d9d064c8647fed16a8f756, type: 3}
+  m_PrefabInstance: {fileID: 7486654115958108458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8073667368940033122
 PrefabInstance:
   m_ObjectHideFlags: 0

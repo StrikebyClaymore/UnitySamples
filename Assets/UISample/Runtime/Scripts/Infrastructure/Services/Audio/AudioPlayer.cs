@@ -17,9 +17,9 @@ namespace UISample.Infrastructure
         public readonly UnityEvent<AudioSource> OnAudioPlayingCompleted = new();
         private AudioSource _backgroundMusic;
         
-        public AudioPlayer(ApplicationConfigs configsContainer)
+        public AudioPlayer(AudioConfig config)
         {
-            _config = configsContainer.AudioConfig;
+            _config = config;
             _audioPool = new MonoPool<AudioSource>(_config.AudioSourcePrefab, 1, new GameObject("Audio Pool").transform, true);
             _audioSettings = ServiceLocator.Get<AudioSettings>();
             _audioSettings.OnMusicVolumeChanged.AddListener(OnMusicVolumeChanged);

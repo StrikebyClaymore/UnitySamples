@@ -9,6 +9,7 @@ namespace UISample.Infrastructure
     {
         [SerializeField] private MainMenuConfigs _configsContainer;
         [SerializeField] private UIContainer _uiContainer;
+        [SerializeField] private Canvas _rootCanvas;
         public bool IsInitialized { get; private set; }
 
         private void Start()
@@ -58,6 +59,7 @@ namespace UISample.Infrastructure
         private void InstallSceneUI()
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();
+            sceneUI.RootCanvas = _rootCanvas;
             sceneUI.ClearControllers();
             sceneUI.RegisterController(typeof(MainMenuController), new MainMenuController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(SettingsController), new SettingsController(_uiContainer));
@@ -67,8 +69,8 @@ namespace UISample.Infrastructure
             sceneUI.RegisterController(typeof(SkinsController), new SkinsController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(ShopController), new ShopController(_uiContainer, _configsContainer));
             sceneUI.RegisterController(typeof(LeaderboardController), new LeaderboardController(_uiContainer));
-            sceneUI.RegisterController(typeof(AdvController), new AdvController(_uiContainer));
             sceneUI.RegisterController(typeof(RouletteController), new RouletteController(_uiContainer));
+            sceneUI.RegisterController(typeof(AcceptPopup), new AcceptPopup(_uiContainer));
             sceneUI.ShowController<MainMenuController>();
         }
     }

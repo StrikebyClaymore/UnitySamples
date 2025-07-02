@@ -8,12 +8,13 @@ namespace UISample.Features
 {
     public class Shop : ILocalService, IInitializable
     {
+        private const string AdvMessage = "Would you like to see an advertisement?";
         private readonly ShopConfig _config;
         private readonly PlayerData _playerData;
         private readonly IAdvManager _advManager;
         private readonly IPurchaseManager _purchaseManager;
         private ShopController _shopController;
-        private AdvController _advController;
+        private AcceptPopup _acceptPopup;
         private RouletteController _rouletteController;
         private string _currentProductId;
         public bool IsInitialized { get; private set; }
@@ -31,7 +32,7 @@ namespace UISample.Features
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();
             _shopController = sceneUI.GetController<ShopController>();
-            _advController = sceneUI.GetController<AdvController>();
+            _acceptPopup = sceneUI.GetController<AcceptPopup>();
             _rouletteController = sceneUI.GetController<RouletteController>();
             _shopController.InitializeSlots();
             IsInitialized = true;
@@ -56,8 +57,8 @@ namespace UISample.Features
                     _purchaseManager.Purchase(product.Id);
                     return;
                 case ECurrency.Adv:
-                    _advController.Show();
-                    _advController.OnChosen += AdvChoiceResult;
+                    _acceptPopup.Show(AdvMessage);
+                    _acceptPopup.OnClose += AdvChoiceResult;
                     return;
             }
             PurchaseCompleted(product.Id, success);
@@ -102,7 +103,7 @@ namespace UISample.Features
 
         private void AdvChoiceResult(bool showRewardAdv)
         {
-            _advController.OnChosen -= AdvChoiceResult;
+            _acceptPopup.OnClose -= AdvChoiceResult;
             if (showRewardAdv)
             {
                 _advManager.OnRewardAdvShown += HandleRewardAdvResult;

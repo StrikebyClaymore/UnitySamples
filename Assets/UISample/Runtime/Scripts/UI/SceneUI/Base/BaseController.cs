@@ -1,6 +1,5 @@
 using System;
 using Plugins.ServiceLocator;
-using UISample.Infrastructure;
 
 namespace UISample.UI
 {

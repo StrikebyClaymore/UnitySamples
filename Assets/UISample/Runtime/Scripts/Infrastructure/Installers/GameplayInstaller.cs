@@ -14,6 +14,7 @@ namespace UISample.Infrastructure
         [SerializeField] private Parallax _parallax;
         [SerializeField] private PlayerInstaller _playerInstaller;
         [SerializeField] private Tilemap _tilemap;
+        [SerializeField] private Canvas _rootCanvas;
         public bool IsInitialized { get; private set; }
 
         private void Start()
@@ -43,6 +44,7 @@ namespace UISample.Infrastructure
         private void InstallSceneUI()
         {
             var sceneUI = ServiceLocator.Get<SceneUI>();
+            sceneUI.RootCanvas = _rootCanvas;
             sceneUI.ClearControllers();
             sceneUI.RegisterController(typeof(ControlsController), new ControlsController(_uiContainer));
             sceneUI.RegisterController(typeof(HollowController), new HollowController(_uiContainer));

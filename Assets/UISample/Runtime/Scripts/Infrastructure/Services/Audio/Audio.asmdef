@@ -1,11 +1,12 @@
 {
-    "name": "Adv",
+    "name": "Audio",
     "rootNamespace": "",
     "references": [
         "GUID:eef6182f69ed40a4e8da291d21e9bf2b",
         "GUID:e64baf239d3dbe1488d9a36c532f5344",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:f632b51ced8c416439218363d530d0c4"
+        "GUID:28bee613039175549973697943fe12ff",
+        "GUID:da9540fec8f7ae943a5ba3c751b1b5ef",
+        "GUID:d537addc1e3e0dc4ebf9fade95c363e0"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -11,6 +11,7 @@ namespace UISample.Infrastructure
     {
         [SerializeField] private UIContainer _uiContainer;
         [SerializeField] private ApplicationConfigs _configsContainer;
+        [SerializeField] private AdvPanel _advPanelPrefab;
         public bool IsInitialized { get; private set; }
 
         public override void Install()
@@ -51,7 +52,7 @@ namespace UISample.Infrastructure
 
         private void InstallAdvManager()
         {
-            ServiceLocator.Register(new StubAdvManager());
+            ServiceLocator.Register(new StubAdvManager(_advPanelPrefab));
         }
         
         private void InstallQuestsManager()
@@ -90,7 +91,7 @@ namespace UISample.Infrastructure
         
         private void InstallAudioPlayer()
         {
-            ServiceLocator.Register<AudioPlayer>(new AudioPlayer(_configsContainer));
+            ServiceLocator.Register<AudioPlayer>(new AudioPlayer(_configsContainer.AudioConfig));
         }
         
         private void InstallAudioSettings()
@@ -101,6 +102,7 @@ namespace UISample.Infrastructure
         private void InstallSceneUI()
         {
             var sceneUI = new SceneUI();
+            sceneUI.RootCanvas = null;
             ServiceLocator.Register<SceneUI>(sceneUI);
             sceneUI.RegisterController(typeof(LoadingController), new LoadingController(_uiContainer));
             sceneUI.ShowController<LoadingController>();

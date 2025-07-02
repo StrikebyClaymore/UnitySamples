@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Plugins.ServiceLocator;
-using UISample.UI;
+using UISample.Infrastructure;
 using UnityEngine;
 
-namespace UISample.Infrastructure
+namespace UISample.UI
 {
     public class SceneUI : IService, IInitializable, IDisposable
     {
         protected readonly Dictionary<Type, BaseController> _controllers = new();
         protected readonly Dictionary<Type, BaseController> _showedControllers = new();
         protected readonly Stack<List<Type>> _previousControllersStack = new();
+        public Canvas RootCanvas;
         public bool IsInitialized { get; private set; }
 
         public void Initialize()
