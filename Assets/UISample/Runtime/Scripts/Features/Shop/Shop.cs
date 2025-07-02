@@ -73,8 +73,7 @@ namespace UISample.Features
                     _playerData.Gems.Value += product.Amount;
                     break;
                 case EProducts.RandomSkin:
-                    // Handle unlock random skin
-                    //_rouletteController.Show();
+                    _rouletteController.Show();
                     break;
             }
         }
