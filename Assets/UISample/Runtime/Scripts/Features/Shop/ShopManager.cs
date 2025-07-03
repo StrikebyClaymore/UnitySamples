@@ -6,13 +6,14 @@ using UISample.UI;
 
 namespace UISample.Features
 {
-    public class Shop : ILocalService, IInitializable
+    public class ShopManager : ILocalService, IInitializable
     {
         private const string AdvMessage = "Would you like to see an advertisement?";
         private readonly ShopConfig _config;
         private readonly PlayerData _playerData;
         private readonly IAdvManager _advManager;
         private readonly IPurchaseManager _purchaseManager;
+        private readonly SkinsManager _skinsManager;
         private ShopController _shopController;
         private AcceptPopup _acceptPopup;
         private RouletteController _rouletteController;
@@ -20,12 +21,13 @@ namespace UISample.Features
         public bool IsInitialized { get; private set; }
         public event Action<bool> OnPurchaseCompleted;
         
-        public Shop(MainMenuConfigs configsContainer)
+        public ShopManager(MainMenuConfigs configsContainer)
         {
             _config = configsContainer.ShopConfig;
             _playerData = ServiceLocator.Get<PlayerData>();
             _advManager = ServiceLocator.Get<IAdvManager>();
             _purchaseManager = ServiceLocator.Get<IPurchaseManager>();
+            _skinsManager = ServiceLocator.GetLocal<SkinsManager>();
         }
 
         public void Initialize()
@@ -35,6 +37,8 @@ namespace UISample.Features
             _acceptPopup = sceneUI.GetController<AcceptPopup>();
             _rouletteController = sceneUI.GetController<RouletteController>();
             _shopController.InitializeSlots();
+            if(_skinsManager.AllSkinsUnlocked)
+                _shopController.HideSkinSlots();
             IsInitialized = true;
         }
 
@@ -73,6 +77,8 @@ namespace UISample.Features
                     _playerData.Gems.Value += product.Amount;
                     break;
                 case EProducts.RandomSkin:
+                    var skin = _rouletteController.PredictWinner();
+                    _skinsManager.UnlockSkin(skin.Id);
                     _rouletteController.Show();
                     break;
             }

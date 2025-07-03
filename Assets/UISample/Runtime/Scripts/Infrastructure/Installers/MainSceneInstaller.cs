@@ -33,7 +33,7 @@ namespace UISample.Infrastructure
             audioPlayer.PlayMusic(audioPlayer.Config.MainMusicClip);
             ServiceLocator.GetLocal<DailyCalendarManager>().Initialize();
             ServiceLocator.GetLocal<SkinsManager>().Initialize();
-            ServiceLocator.GetLocal<Shop>().Initialize();
+            ServiceLocator.GetLocal<ShopManager>().Initialize();
             ServiceLocator.Get<DailyQuestsManager>().Initialize();
             PlayerPrefs.Save();
             IsInitialized = true;
@@ -53,7 +53,7 @@ namespace UISample.Infrastructure
 
         private void InstallShop()
         {
-            ServiceLocator.RegisterLocal<Shop>(new Shop(_configsContainer));
+            ServiceLocator.RegisterLocal<ShopManager>(new ShopManager(_configsContainer));
         }
 
         private void InstallSceneUI()

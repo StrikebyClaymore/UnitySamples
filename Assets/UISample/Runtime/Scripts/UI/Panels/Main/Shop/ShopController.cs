@@ -3,6 +3,7 @@ using Plugins.ServiceLocator;
 using UISample.Data;
 using UISample.Features;
 using UISample.Infrastructure;
+using UISample.Utility;
 
 namespace UISample.UI
 {
@@ -10,14 +11,14 @@ namespace UISample.UI
     {
         private readonly ShopView _view;
         private readonly ShopConfig _config;
-        private readonly Shop _shop;
+        private readonly ShopManager _shopManager;
         private readonly List<ShopSlot> _slots = new();
 
         public ShopController(UIContainer uiContainer, MainMenuConfigs configsContainer)
         {
             _view = uiContainer.GetView<ShopView>();
             _config = configsContainer.ShopConfig;
-            _shop = ServiceLocator.GetLocal<Shop>();
+            _shopManager = ServiceLocator.GetLocal<ShopManager>();
             _view.CloseButton.onClick.AddListener(ClosePressed);
             _view.ShadowCloseButton.onClick.AddListener(ClosePressed);
         }
@@ -45,9 +46,18 @@ namespace UISample.UI
             }
         }
 
+        public void HideSkinSlots()
+        {
+            for (var i = 0; i < _slots.Count; i++)
+            {
+                if (_config.Products[i].Type is EProducts.RandomSkin)
+                    _slots[i].Hide();
+            }
+        }
+
         private void SlotPressed(int index)
         {
-            _shop.TryPurchaseProduct(index);
+            _shopManager.TryPurchaseProduct(index);
         }
 
         private void ClosePressed()
